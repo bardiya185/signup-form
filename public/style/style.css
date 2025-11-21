@@ -1,6 +1,6 @@
 @font-face {
     font-family: iran;
-    src: url('public\fonts\IRANYekanXVF.woff');
+    src: url('./../fonts/IRANYekanXVF.woff');
 }
 *{
     font-family: iran;
