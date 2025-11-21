@@ -1,8 +1,3 @@
-
-
-
-
-
 function login() {
     bs2.style.display = "block";
     bs1.style.display = "none";
