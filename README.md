@@ -1,44 +1,46 @@
-<h1 align="center">Hi, I'm Bardiya Vahedi 👋</h1>
+# ✨ Signup Form
 
-<h3 align="center">Full-Stack Developer | Iran</h3>
-
----
-
-### 👨‍💻 About Me
-🌍 I’m a front-end and back-end developer based in Iran.  
-🌱 I’m currently learning **Laravel**, **React**, and **Next.js**.  
-🎯 My goal is to build useful, secure, and user-friendly projects with clean UI and proper data handling.  
-💡 I enjoy learning, coding, and creating new ideas.
+A **simple and clean signup form** project built with **HTML, CSS, JavaScript, and Bootstrap**.  
+Perfect for learning frontend web development and form handling.
 
 ---
 
-### 🛠️ Technologies & Tools
+## 🚀 Technologies Used
+
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,tailwind,bootstrap,jquery,php,laravel" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" width="80" height="80"/>  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" width="80" height="80"/>  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="80" height="80"/>  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap" width="80" height="80"/>  
 </p>
 
 ---
 
-### 📊 GitHub Stats
-<p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=bardiya185&show_icons=true&theme=tokyonight&hide_border=true" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=bardiya185&layout=compact&theme=tokyonight&hide_border=true" />
-</p>
+## 🎯 Project Goal
+
+This project was created to:  
+- 🖌️ Build a **simple and beautiful signup form**  
+- 📚 Practice **HTML, CSS, JavaScript, and Bootstrap**  
+- 🔗 Be ready for **server-side integration** with PHP or other frameworks
 
 ---
 
-### 📫 Contact Me
-<p align="center">
-  <a href="mailto:your-email@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white"></a>
-  <a href="https://t.me/your_telegram"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a>
-  <a href="https://github.com/bardiya185"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a>
-</p>
+## 🧰 Installation & Running
 
----
+1. **Clone the repository:**  
+bash
+git clone https://github.com/bardiya185/signup-form.git
+Go to the project folder:
 
-<p align="center">
-  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="120" />
-</p>
+bash
+Copy code
+cd signup-form
+Open index.html in your browser.
 
-<p align="center"><em>"Build. Learn. Repeat."</em></p>
+✅ Done! The signup form is ready to use.
 
+
+ ## 🖥️Author
+**Bardiya Vahedi**
+<br/>
+<h2 align='center'>🔥 Build. Learn. Repeat. 🔥</h2>
