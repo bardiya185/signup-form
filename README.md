@@ -24,8 +24,8 @@ This project was created to:
 - 🔗 Be ready for **server-side integration** with PHP or other frameworks
 
 ---
-## 🖥️Demo
-https://signup-form85.netlify.app/
+## 🖥️ Demo
+- https://signup-form85.netlify.app/
 ---
 
 ## 🧰 Installation & Running
