@@ -1,5 +1,5 @@
 import { Category } from '@/types';
-const img=(group:'tech'|'life'|'home')=>`/products/${group==='tech'?'tech-photo':group==='life'?'lifestyle-photo':'home-photo'}.jpg`;
+const img=(group:'tech'|'life'|'home')=>`/products/real/${group==='tech'?'phone':group==='life'?'bag':'laptop'}.jpg`;
 const categories:Category[]=[
  {id:'1',slug:'mobile',title:'موبایل و تبلت',image:img('tech'),count:1254},
  {id:'2',slug:'digital',title:'کالای دیجیتال',image:img('tech'),count:842},
