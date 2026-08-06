@@ -12,8 +12,9 @@ import { toToman } from '@/utils/cn';
 
 export function Header() {
   const [query, setQuery] = useState('');
-  const [cartOpen, setCartOpen] = useState(false);
   const items = useCartStore(s => s.items);
+  const cartOpen = useCartStore(s => s.isCartOpen);
+  const setCartOpen = useCartStore(s => s.setCartOpen);
   const result = query ? products.filter(p => p.title.includes(query) || p.brand.toLowerCase().includes(query.toLowerCase())).slice(0, 4) : [];
   const cart = cartService.calculate(items);
   return <header className="sticky top-0 z-40 border-b bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
