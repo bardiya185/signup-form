@@ -1,0 +1,1 @@
+import { clsx, type ClassValue } from 'clsx'; import { twMerge } from 'tailwind-merge'; export const cn=(...inputs:ClassValue[])=>twMerge(clsx(inputs)); export const toToman=(price:number)=>new Intl.NumberFormat('fa-IR').format(Math.round(price/10));

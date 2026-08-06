@@ -1,0 +1,1 @@
+'use client'; import { useQuery } from '@tanstack/react-query'; import { productService } from '@/services/product.service'; export const useProducts=()=>useQuery({queryKey:['products','featured'],queryFn:productService.getFeatured}); export const useProduct=(slug:string)=>useQuery({queryKey:['product',slug],queryFn:()=>productService.getBySlug(slug)});
