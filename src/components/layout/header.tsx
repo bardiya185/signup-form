@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MapPin, Menu, Search, ShoppingCart, User, Heart, Tag, ChevronDown, X, Trash2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cart.store';
 import { ThemeToggle } from './theme-toggle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { products } from '@/services/product.service';
 import { cartService } from '@/services/cart.service';
 import { toToman } from '@/utils/cn';
@@ -15,12 +15,14 @@ import { CartSkeleton, Spinner } from '@/components/ui/loading';
 export function Header() {
   const [query, setQuery] = useState('');
   const [seedingCart, setSeedingCart] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const items = useCartStore(s => s.items);
   const cartOpen = useCartStore(s => s.isCartOpen);
   const hydrated = useCartStore(s => s.hasHydrated);
   const setCartOpen = useCartStore(s => s.setCartOpen);
   const remove = useCartStore(s => s.remove);
   const add = useCartStore(s => s.add);
+  useEffect(() => { if (!query) return setIsSearching(false); setIsSearching(true); const timer=window.setTimeout(()=>setIsSearching(false),220); return ()=>window.clearTimeout(timer); }, [query]);
   const result = query ? products.filter(p => p.title.includes(query) || p.brand.toLowerCase().includes(query.toLowerCase())).slice(0, 4) : [];
   const cart = cartService.calculate(items);
   const totalItems=items.reduce((sum,item)=>sum+item.quantity,0);
@@ -30,7 +32,7 @@ export function Header() {
         <div className="flex h-[72px] items-center gap-3">
           <button className="lg:hidden" aria-label="منو"><Menu/></button>
           <Link href="/" className="shrink-0 text-xl font-black text-brand">گینان<span className="text-zinc-800 dark:text-white">‌کالا</span></Link>
-          <div className="relative hidden max-w-2xl flex-1 md:block"><Search className="absolute right-3 top-3 text-zinc-400" size={19}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="جستجو در گینان‌کالا..." className="h-11 w-full rounded-xl bg-zinc-100 pr-10 text-sm outline-none ring-brand transition focus:ring-2 dark:bg-zinc-900"/>{result.length>0 && <div className="absolute top-12 w-full overflow-hidden rounded-xl bg-white shadow-xl dark:bg-zinc-900">{result.map(p=><Link onClick={()=>setQuery('')} className="block px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800" href={`/products/${p.slug}`} key={p.id}>{p.title}</Link>)}</div>}</div>
+          <div className="relative hidden max-w-2xl flex-1 md:block"><Search className="absolute right-3 top-3 text-zinc-400" size={19}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="جستجو در گینان‌کالا..." className="h-11 w-full rounded-xl bg-zinc-100 pr-10 text-sm outline-none ring-brand transition focus:ring-2 dark:bg-zinc-900"/>{query && <div className="absolute top-12 w-full overflow-hidden rounded-xl bg-white shadow-xl dark:bg-zinc-900">{isSearching ? <div className="flex items-center gap-2 p-4 text-sm text-zinc-500"><Spinner/>در حال جستجو...</div> : result.length ? result.map(p=><Link onClick={()=>setQuery('')} className="block px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800" href={`/products/${p.slug}`} key={p.id}>{p.title}</Link>) : <p className="p-4 text-sm text-zinc-500">محصولی پیدا نشد.</p>}</div>}</div>
           <div className="mr-auto flex items-center gap-1"><ThemeToggle/><Link href="/account" className="hidden items-center gap-2 rounded-xl border border-zinc-200 px-3 py-2 text-sm font-bold dark:border-zinc-700 sm:flex"><User size={18}/>حساب کاربری</Link><button onClick={()=>setCartOpen(true)} className={`relative grid h-10 w-10 place-items-center rounded-xl transition hover:bg-zinc-100 dark:hover:bg-zinc-800 ${totalItems?'animate-soft-pulse':''}`} aria-label="مشاهده سبد خرید"><ShoppingCart size={20}/>{totalItems>0&&<b className="absolute -left-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[10px] text-white">{totalItems.toLocaleString('fa-IR')}</b>}</button></div>
         </div>
         <div className="flex h-11 items-center gap-6 overflow-x-auto whitespace-nowrap border-t border-zinc-200/80 text-sm font-semibold dark:border-white/[.08]"><button className="flex items-center gap-1 text-brand"><Menu size={18}/>دسته‌بندی کالاها<ChevronDown size={14}/></button><Link href="/category/mobile">موبایل و تبلت</Link><Link href="/category/laptop">لپ‌تاپ و کامپیوتر</Link><Link href="/category/fashion">مد و پوشاک</Link><Link href="/category/home">خانه و آشپزخانه</Link><Link href="/category/gaming">گیمینگ</Link><a href="#offers" className="flex items-center gap-1"><Tag size={16} className="text-brand"/>تخفیف‌ها و پیشنهادها</a><a href="#best">پرفروش‌ترین‌ها</a><Link href="/account?tab=wishlist"><Heart size={16} className="ml-1 inline"/>علاقه‌مندی‌ها</Link><span className="mr-auto hidden items-center gap-1 text-xs text-zinc-500 lg:flex"><MapPin size={16} className="text-brand"/>ارسال به تهران، تهران</span></div>
