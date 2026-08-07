@@ -64,9 +64,12 @@ class DatabaseSeeder extends Seeder
         $this->command?->info('✓ سید کامل گینان‌کالا بارگذاری شد');
     }
 
-    /** نرمال‌سازی تاریخ‌های ISO به فرمت datetime دیتابیس */
+    /** نرمال‌سازی تاریخ‌های ISO (در sqlite همان ISO حفظ می‌شود چون ستون‌ها TEXT هستند) */
     private static function normalizeRow(array $row): array
     {
+        if (DB::connection()->getDriverName() === 'sqlite') {
+            return $row;
+        }
         foreach ($row as $key => $value) {
             if (is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $value)) {
                 $row[$key] = str_replace('T', ' ', substr($value, 0, 19));
