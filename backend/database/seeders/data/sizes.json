@@ -1,0 +1,65 @@
+[
+ {
+  "id": 1,
+  "name": "فری سایز",
+  "type": "other",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "name": "41",
+  "type": "shoe",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "name": "42",
+  "type": "shoe",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "name": "43",
+  "type": "shoe",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 5,
+  "name": "44",
+  "type": "shoe",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 6,
+  "name": "45",
+  "type": "shoe",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 7,
+  "name": "M",
+  "type": "clothing",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 8,
+  "name": "L",
+  "type": "clothing",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 9,
+  "name": "XL",
+  "type": "clothing",
+  "created_at": "",
+  "updated_at": ""
+ }
+]

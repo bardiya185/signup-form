@@ -1,0 +1,34 @@
+[
+ {
+  "id": 1,
+  "title": "گارانتی ۱۸ ماهه شرکتی",
+  "months": 18,
+  "description": null,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "گارانتی ۲۴ ماهه رسمی",
+  "months": 24,
+  "description": null,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "گارانتی ۱۲ ماهه",
+  "months": 12,
+  "description": null,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "title": "ضمانت اصالت و سلامت فیزیکی کالا",
+  "months": 0,
+  "description": "۷ روز مهلت بازگشت کالا",
+  "created_at": "",
+  "updated_at": ""
+ }
+]

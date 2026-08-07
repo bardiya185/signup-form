@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "ginankala/backend",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "GinanKala Laravel API backend (mirrors the api/v1 contract).",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

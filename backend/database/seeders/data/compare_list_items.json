@@ -1,0 +1,23 @@
+[
+ {
+  "id": 1,
+  "compare_list_id": 1,
+  "product_id": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "compare_list_id": 1,
+  "product_id": 2,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "compare_list_id": 1,
+  "product_id": 3,
+  "created_at": "",
+  "updated_at": ""
+ }
+]

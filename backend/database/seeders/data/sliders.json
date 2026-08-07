@@ -1,0 +1,11 @@
+[
+ {
+  "id": 1,
+  "title": "اسلایدر صفحه اصلی",
+  "position": "home_hero",
+  "is_active": true,
+  "items": "[{\"image\":\"/products/tech-photo.jpg\",\"title\":\"کالای دیجیتال\",\"link\":\"/category/digital\"},{\"image\":\"/images/fashion-hero.png\",\"title\":\"مد و پوشاک\",\"link\":\"/category/fashion\"},{\"image\":\"/products/home-photo.jpg\",\"title\":\"خانه و آشپزخانه\",\"link\":\"/category/home-kitchen\"}]",
+  "created_at": "",
+  "updated_at": ""
+ }
+]

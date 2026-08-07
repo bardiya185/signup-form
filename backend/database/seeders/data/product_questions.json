@@ -1,0 +1,38 @@
+[
+ {
+  "id": 1,
+  "product_id": 1,
+  "user_id": 3,
+  "question": "آیا نسخه دو سیم‌کارته هست؟",
+  "answer": "بله، این مدل دو سیم‌کارته (یک سیم فیزیکی + eSIM) می‌باشد.",
+  "answered_by": 1,
+  "answered_at": "2026-08-03T09:00:00Z",
+  "status": "answered",
+  "created_at": "2026-08-02T18:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "product_id": 12,
+  "user_id": 2,
+  "question": "بسته‌بندی شامل چند دسته است؟",
+  "answer": "یک عدد دسته DualSense به همراه کابل شارژ و پایه افقی داخل بسته‌بندی موجود است.",
+  "answered_by": 1,
+  "answered_at": "2026-08-03T09:00:00Z",
+  "status": "answered",
+  "created_at": "2026-08-02T18:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "product_id": 18,
+  "user_id": 2,
+  "question": "سایزها کمی بزرگ‌تر از استاندارد هستن؟",
+  "answer": null,
+  "answered_by": null,
+  "answered_at": null,
+  "status": "pending",
+  "created_at": "2026-08-02T18:00:00Z",
+  "updated_at": ""
+ }
+]

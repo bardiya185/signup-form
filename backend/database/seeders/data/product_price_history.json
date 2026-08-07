@@ -1,0 +1,26 @@
+[
+ {
+  "id": 1,
+  "product_variant_id": 1,
+  "old_price": 78500000,
+  "new_price": 76500000,
+  "created_at": "2026-07-28T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "product_variant_id": 19,
+  "old_price": 41500000,
+  "new_price": 39500000,
+  "created_at": "2026-08-02T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "product_variant_id": 21,
+  "old_price": 76000000,
+  "new_price": 74000000,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": ""
+ }
+]

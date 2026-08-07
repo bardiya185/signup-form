@@ -1,0 +1,29 @@
+[
+ {
+  "id": 1,
+  "title": "پست پیشتاز",
+  "cost": 45000,
+  "estimated_days": 3,
+  "is_active": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "تیپاکس",
+  "cost": 69000,
+  "estimated_days": 2,
+  "is_active": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "تحویل اکسپرس (فقط تهران)",
+  "cost": 99000,
+  "estimated_days": 1,
+  "is_active": true,
+  "created_at": "",
+  "updated_at": ""
+ }
+]

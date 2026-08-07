@@ -1,0 +1,29 @@
+[
+ {
+  "id": 1,
+  "title": "با گینان‌کالا",
+  "location": "footer_col1",
+  "is_active": true,
+  "items": "[{\"label\":\"اتاق خبر گینان‌کالا\",\"link\":\"/blog\"},{\"label\":\"فروش در گینان‌کالا\",\"link\":\"/become-seller\"},{\"label\":\"فرصت‌های شغلی\",\"link\":\"/careers\"},{\"label\":\"تماس با ما\",\"link\":\"/contact\"},{\"label\":\"درباره ما\",\"link\":\"/about\"}]",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "خدمات مشتریان",
+  "location": "footer_col2",
+  "is_active": true,
+  "items": "[{\"label\":\"پاسخ به پرسش‌های متداول\",\"link\":\"/faq\"},{\"label\":\"رویه‌های بازگرداندن کالا\",\"link\":\"/page/return-policy\"},{\"label\":\"شرایط استفاده\",\"link\":\"/page/terms\"},{\"label\":\"حریم خصوصی\",\"link\":\"/page/privacy\"},{\"label\":\"گزارش باگ\",\"link\":\"/contact\"}]",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "راهنمای خرید",
+  "location": "footer_col3",
+  "is_active": true,
+  "items": "[{\"label\":\"نحوه ثبت سفارش\",\"link\":\"/page/how-to-order\"},{\"label\":\"رویه ارسال سفارش\",\"link\":\"/page/shipping\"},{\"label\":\"شیوه‌های پرداخت\",\"link\":\"/page/payment-methods\"}]",
+  "created_at": "",
+  "updated_at": ""
+ }
+]

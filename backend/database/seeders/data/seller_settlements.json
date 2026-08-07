@@ -1,0 +1,42 @@
+[
+ {
+  "id": 1,
+  "seller_id": 1,
+  "amount": 12000000,
+  "status": "paid",
+  "paid_at": "2026-08-01T10:00:00Z",
+  "reference": "ST-2026-1001",
+  "created_at": "2026-07-28T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "seller_id": 1,
+  "amount": 8400000,
+  "status": "pending",
+  "paid_at": null,
+  "reference": null,
+  "created_at": "2026-08-05T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "seller_id": 2,
+  "amount": 3450000,
+  "status": "pending",
+  "paid_at": null,
+  "reference": null,
+  "created_at": "2026-08-06T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "seller_id": 4,
+  "amount": 5200000,
+  "status": "paid",
+  "paid_at": "2026-08-02T10:00:00Z",
+  "reference": "ST-2026-1004",
+  "created_at": "2026-07-30T10:00:00Z",
+  "updated_at": ""
+ }
+]

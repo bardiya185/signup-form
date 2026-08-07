@@ -1,0 +1,23 @@
+[
+ {
+  "id": 1,
+  "user_id": 2,
+  "balance": 250000,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "user_id": 3,
+  "balance": 0,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "user_id": 4,
+  "balance": 0,
+  "created_at": "",
+  "updated_at": ""
+ }
+]

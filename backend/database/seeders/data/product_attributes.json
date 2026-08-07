@@ -1,0 +1,632 @@
+[
+ {
+  "id": 1,
+  "product_id": 1,
+  "attribute_id": 1,
+  "attribute_value_id": 2,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 2,
+  "product_id": 1,
+  "attribute_id": 2,
+  "attribute_value_id": 6,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 3,
+  "product_id": 1,
+  "attribute_id": 3,
+  "attribute_value_id": 9,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 4,
+  "product_id": 1,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Apple A17 Pro",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 5,
+  "product_id": 1,
+  "attribute_id": 13,
+  "attribute_value_id": 32,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 6,
+  "product_id": 2,
+  "attribute_id": 1,
+  "attribute_value_id": 3,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 7,
+  "product_id": 2,
+  "attribute_id": 2,
+  "attribute_value_id": 7,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 8,
+  "product_id": 2,
+  "attribute_id": 3,
+  "attribute_value_id": 12,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 9,
+  "product_id": 2,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Snapdragon 8 Gen 3",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 10,
+  "product_id": 2,
+  "attribute_id": 13,
+  "attribute_value_id": 32,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 11,
+  "product_id": 3,
+  "attribute_id": 1,
+  "attribute_value_id": 2,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 12,
+  "product_id": 3,
+  "attribute_id": 2,
+  "attribute_value_id": 6,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 13,
+  "product_id": 3,
+  "attribute_id": 3,
+  "attribute_value_id": 11,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 14,
+  "product_id": 3,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Snapdragon 7s Gen 2",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 15,
+  "product_id": 3,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 16,
+  "product_id": 4,
+  "attribute_id": 1,
+  "attribute_value_id": 2,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 17,
+  "product_id": 4,
+  "attribute_id": 2,
+  "attribute_value_id": 6,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 18,
+  "product_id": 4,
+  "attribute_id": 3,
+  "attribute_value_id": 13,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 19,
+  "product_id": 4,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Apple M3",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 20,
+  "product_id": 4,
+  "attribute_id": 13,
+  "attribute_value_id": 32,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 21,
+  "product_id": 5,
+  "attribute_id": 1,
+  "attribute_value_id": 3,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 22,
+  "product_id": 5,
+  "attribute_id": 2,
+  "attribute_value_id": 8,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 23,
+  "product_id": 5,
+  "attribute_id": 3,
+  "attribute_value_id": 14,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 24,
+  "product_id": 5,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Intel Core i7 13620H",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 25,
+  "product_id": 5,
+  "attribute_id": 13,
+  "attribute_value_id": 31,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 26,
+  "product_id": 6,
+  "attribute_id": 1,
+  "attribute_value_id": 3,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 27,
+  "product_id": 6,
+  "attribute_id": 2,
+  "attribute_value_id": 6,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 28,
+  "product_id": 6,
+  "attribute_id": 3,
+  "attribute_value_id": 14,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 29,
+  "product_id": 6,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "Intel Core i5 13420H",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 30,
+  "product_id": 6,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 31,
+  "product_id": 7,
+  "attribute_id": 5,
+  "attribute_value_id": 17,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 32,
+  "product_id": 7,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 33,
+  "product_id": 8,
+  "attribute_id": 5,
+  "attribute_value_id": 17,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 34,
+  "product_id": 8,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 35,
+  "product_id": 9,
+  "attribute_id": 13,
+  "attribute_value_id": 32,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 36,
+  "product_id": 9,
+  "attribute_id": 4,
+  "attribute_value_id": null,
+  "custom_value": "DIGIC X",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 37,
+  "product_id": 9,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "بدنه پلی‌کربنات مستحکم",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 38,
+  "product_id": 10,
+  "attribute_id": 5,
+  "attribute_value_id": 17,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 39,
+  "product_id": 10,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 40,
+  "product_id": 11,
+  "attribute_id": 5,
+  "attribute_value_id": 17,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 41,
+  "product_id": 11,
+  "attribute_id": 13,
+  "attribute_value_id": 30,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 42,
+  "product_id": 12,
+  "attribute_id": 1,
+  "attribute_value_id": 4,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 43,
+  "product_id": 12,
+  "attribute_id": 13,
+  "attribute_value_id": 31,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 44,
+  "product_id": 13,
+  "attribute_id": 1,
+  "attribute_value_id": 4,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 45,
+  "product_id": 13,
+  "attribute_id": 13,
+  "attribute_value_id": 31,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 46,
+  "product_id": 14,
+  "attribute_id": 3,
+  "attribute_value_id": 15,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 47,
+  "product_id": 14,
+  "attribute_id": 6,
+  "attribute_value_id": 21,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 48,
+  "product_id": 14,
+  "attribute_id": 7,
+  "attribute_value_id": 23,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 49,
+  "product_id": 15,
+  "attribute_id": 3,
+  "attribute_value_id": 15,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 50,
+  "product_id": 15,
+  "attribute_id": 6,
+  "attribute_value_id": 21,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 51,
+  "product_id": 15,
+  "attribute_id": 7,
+  "attribute_value_id": 24,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 52,
+  "product_id": 16,
+  "attribute_id": 8,
+  "attribute_value_id": null,
+  "custom_value": "1350 وات",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 53,
+  "product_id": 16,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "استیل ضدزنگ",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 54,
+  "product_id": 17,
+  "attribute_id": 8,
+  "attribute_value_id": null,
+  "custom_value": "700 وات",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 55,
+  "product_id": 17,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "پلاستیک نشکن",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 56,
+  "product_id": 18,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "پارچه و چرم مصنوعی",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 57,
+  "product_id": 18,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 58,
+  "product_id": 19,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "پارچه Primeknit",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 59,
+  "product_id": 19,
+  "attribute_id": 13,
+  "attribute_value_id": 30,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 60,
+  "product_id": 20,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "چرم طبیعی گاوی",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 61,
+  "product_id": 21,
+  "attribute_id": 9,
+  "attribute_value_id": null,
+  "custom_value": "استیل ضدزنگ",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 62,
+  "product_id": 22,
+  "attribute_id": 10,
+  "attribute_value_id": null,
+  "custom_value": "رولف دوبلی",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 63,
+  "product_id": 22,
+  "attribute_id": 11,
+  "attribute_value_id": 26,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 64,
+  "product_id": 22,
+  "attribute_id": 14,
+  "attribute_value_id": 33,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 65,
+  "product_id": 23,
+  "attribute_id": 10,
+  "attribute_value_id": null,
+  "custom_value": "پائلو کوئیلو",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 66,
+  "product_id": 23,
+  "attribute_id": 11,
+  "attribute_value_id": 27,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 67,
+  "product_id": 23,
+  "attribute_id": 14,
+  "attribute_value_id": 33,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 68,
+  "product_id": 24,
+  "attribute_id": 12,
+  "attribute_value_id": null,
+  "custom_value": "30 میلی‌لیتر",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 69,
+  "product_id": 24,
+  "attribute_id": 13,
+  "attribute_value_id": 29,
+  "custom_value": null,
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ },
+ {
+  "id": 70,
+  "product_id": 25,
+  "attribute_id": 8,
+  "attribute_value_id": null,
+  "custom_value": "2100 وات",
+  "created_at": "2026-08-01T10:00:00Z",
+  "updated_at": "2026-08-01T10:00:00Z"
+ }
+]

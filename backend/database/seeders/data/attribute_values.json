@@ -1,0 +1,240 @@
+[
+ {
+  "id": 1,
+  "attribute_id": 1,
+  "value": "128 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "attribute_id": 1,
+  "value": "256 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "attribute_id": 1,
+  "value": "512 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "attribute_id": 1,
+  "value": "1 ترابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 5,
+  "attribute_id": 2,
+  "value": "6 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 6,
+  "attribute_id": 2,
+  "value": "8 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 7,
+  "attribute_id": 2,
+  "value": "12 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 8,
+  "attribute_id": 2,
+  "value": "16 گیگابایت",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 9,
+  "attribute_id": 3,
+  "value": "6.1 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 10,
+  "attribute_id": 3,
+  "value": "6.4 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 11,
+  "attribute_id": 3,
+  "value": "6.7 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 12,
+  "attribute_id": 3,
+  "value": "6.8 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 13,
+  "attribute_id": 3,
+  "value": "13.6 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 14,
+  "attribute_id": 3,
+  "value": "15.6 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 15,
+  "attribute_id": 3,
+  "value": "55 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 16,
+  "attribute_id": 3,
+  "value": "65 اینچ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 17,
+  "attribute_id": 5,
+  "value": "بلوتوث",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 18,
+  "attribute_id": 5,
+  "value": "بی‌سیم",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 19,
+  "attribute_id": 5,
+  "value": "باسیم",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 20,
+  "attribute_id": 6,
+  "value": "Full HD",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 21,
+  "attribute_id": 6,
+  "value": "4K UHD",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 22,
+  "attribute_id": 6,
+  "value": "8K",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 23,
+  "attribute_id": 7,
+  "value": "OLED",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 24,
+  "attribute_id": 7,
+  "value": "QLED",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 25,
+  "attribute_id": 7,
+  "value": "NanoCell",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 26,
+  "attribute_id": 11,
+  "value": "نشر چشمه",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 27,
+  "attribute_id": 11,
+  "value": "انتشارات ققنوس",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 28,
+  "attribute_id": 11,
+  "value": "نشر نو",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 29,
+  "attribute_id": 13,
+  "value": "استفاده روزمره",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 30,
+  "attribute_id": 13,
+  "value": "ورزش",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 31,
+  "attribute_id": 13,
+  "value": "گیمینگ",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 32,
+  "attribute_id": 13,
+  "value": "حرفه‌ای",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 33,
+  "attribute_id": 14,
+  "value": "فارسی",
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 34,
+  "attribute_id": 14,
+  "value": "انگلیسی",
+  "created_at": "",
+  "updated_at": ""
+ }
+]

@@ -44,6 +44,7 @@ function open(): DatabaseSync {
     const conn = new DatabaseSync(resolveDbPath());
     conn.exec('PRAGMA journal_mode = WAL');
     conn.exec('PRAGMA synchronous = NORMAL');
+    conn.exec('PRAGMA busy_timeout = 3000');
     columnTables(conn);
     g[SQLITE_GLOBAL_KEY] = conn;
   }

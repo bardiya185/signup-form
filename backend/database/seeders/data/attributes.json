@@ -1,0 +1,114 @@
+[
+ {
+  "id": 1,
+  "title": "حافظه داخلی",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "حافظه رم",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "اندازه صفحه‌نمایش",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "title": "سری پردازنده",
+  "type": "text",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 5,
+  "title": "نوع اتصال",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 6,
+  "title": "وضوح تصویر",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 7,
+  "title": "فناوری صفحه‌نمایش",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 8,
+  "title": "توان خروجی",
+  "type": "text",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 9,
+  "title": "جنس",
+  "type": "text",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 10,
+  "title": "نویسنده",
+  "type": "text",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 11,
+  "title": "ناشر",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 12,
+  "title": "حجم",
+  "type": "text",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 13,
+  "title": "مناسب برای",
+  "type": "select",
+  "filterable": true,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 14,
+  "title": "زبان",
+  "type": "select",
+  "filterable": false,
+  "created_at": "",
+  "updated_at": ""
+ }
+]
