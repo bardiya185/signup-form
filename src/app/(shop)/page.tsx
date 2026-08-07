@@ -1,1 +1,42 @@
-import { HeroSlider } from '@/components/shared/hero-slider'; import { ProductRow } from '@/components/product/product-row'; import { products } from '@/services/product.service'; import { categoryService } from '@/services/category.service'; import Link from 'next/link'; import Image from 'next/image'; export default async function Home(){const categories=await categoryService.getAll();return <><HeroSlider/><section className="container-page mt-8 grid grid-cols-4 gap-3 sm:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12">{categories.map(c=><Link href={`/category/${c.slug}`} key={c.id} className="group text-center"><div className="relative mx-auto aspect-square max-w-28 overflow-hidden rounded-2xl bg-white shadow-card"><Image src={c.image} alt={c.title} fill sizes="120px" className="object-cover transition group-hover:scale-110"/></div><span className="mt-2 block text-xs font-bold sm:text-sm">{c.title}</span></Link>)}</section><section id="offers" className="container-page mt-10 overflow-hidden rounded-3xl bg-brand p-5 text-white"><div className="flex items-center justify-between"><div><p className="text-sm">پیشنهادهای شگفت‌انگیز</p><h2 className="mt-1 text-2xl font-black">فقط تا پایان امروز</h2></div><span className="rounded-xl bg-white/20 px-4 py-2 font-bold">۱۲ : ۴۵ : ۰۸</span></div><div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{products.slice(0,6).map(p=><div className="rounded-xl bg-white p-2 text-zinc-800" key={p.id}><Image src={p.image} alt={p.title} width={200} height={150} className="h-28 w-full rounded-lg object-cover"/><p className="mt-2 truncate text-xs font-bold">{p.title}</p></div>)}</div></section><ProductRow id="best" title="پرفروش‌ترین کالاها" products={products}/><ProductRow title="پیشنهاد گینان‌کالا برای شما" products={[...products].reverse()}/></>}
+import { homePayload } from '@/server/repositories/content.repository';
+import { HeroSlider } from '@/components/home/hero-slider';
+import { SideBanners } from '@/components/home/banners-duo';
+import { CategoryStrip } from '@/components/home/category-strip';
+import { IncredibleCarousel } from '@/components/home/incredible-carousel';
+import { BrandStrip } from '@/components/home/brand-strip';
+import { BlogStrip } from '@/components/home/blog-strip';
+import { ProductCarousel } from '@/components/product/product-carousel';
+import { RecentlyViewedSection } from '@/components/product/recently-viewed';
+
+export const dynamic = 'force-dynamic';
+
+export default function HomePage() {
+  const data = homePayload();
+  return (
+    <div>
+      {/* قهرمان */}
+      <section className="container-page pt-4">
+        <div className="grid grid-cols-12 gap-3">
+          <HeroSlider banners={data.heroBanners} />
+          <SideBanners banners={data.sidebarBanners} />
+        </div>
+      </section>
+
+      <CategoryStrip categories={data.categories} />
+
+      <IncredibleCarousel offers={data.incredibleOffers} endsAt={data.incredibleEndsAt} />
+
+      <ProductCarousel products={data.featuredProducts} title="محصولات ویژه" href="/products" />
+
+      <BrandStrip brands={data.brands} />
+
+      <ProductCarousel products={data.bestSellingProducts} title="پرفروش‌ترین‌ها" href="/products?sort=best_selling" />
+
+      <ProductCarousel products={data.newestProducts} title="جدیدترین محصولات" href="/products?sort=newest" />
+
+      <RecentlyViewedSection />
+
+      <BlogStrip />
+    </div>
+  );
+}

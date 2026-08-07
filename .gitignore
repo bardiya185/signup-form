@@ -5,3 +5,4 @@ out
 *.tsbuildinfo
 .env*
 !.env.example
+.smoke-tokens.json

@@ -1,2 +1,0 @@
-import { CartItem } from '@/types';
-export const cartService={calculate:(items:CartItem[])=>{const subtotal=items.reduce((sum,item)=>sum+item.product.price*item.quantity,0);const savings=items.reduce((sum,item)=>sum+((item.product.originalPrice??item.product.price)-item.product.price)*item.quantity,0);return {subtotal,savings,shipping:subtotal>500000?0:59000,total:subtotal+(subtotal>500000?0:59000)}}};

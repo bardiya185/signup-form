@@ -1,0 +1,22 @@
+{
+  "name": "گینان‌کالا | فروشگاه اینترنتی",
+  "short_name": "گینان‌کالا",
+  "description": "خرید آنلاین با ضمانت اصالت کالا و ارسال سریع",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#ef4056",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "پیشنهاد شگفت‌انگیز", "url": "/incredible-offers" },
+    { "name": "سبد خرید", "url": "/cart" }
+  ]
+}
