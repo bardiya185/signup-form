@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-/** جدول brands — معادل اینترفیس Brand در domain.ts */
 class Brand extends Model
 {
     protected $table = 'brands';
+
     protected $guarded = [];
 
     protected $casts = [
-            'is_active' => 'boolean',
+        'is_active' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

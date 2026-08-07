@@ -10,7 +10,7 @@
   "color_id": 13,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -25,7 +25,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -40,7 +40,7 @@
   "color_id": 4,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -55,7 +55,7 @@
   "color_id": 11,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -70,7 +70,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -85,7 +85,7 @@
   "color_id": 5,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -100,7 +100,7 @@
   "color_id": 3,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -115,7 +115,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -130,7 +130,7 @@
   "color_id": 4,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -145,7 +145,7 @@
   "color_id": 5,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -160,7 +160,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -175,7 +175,7 @@
   "color_id": 9,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -190,7 +190,7 @@
   "color_id": 2,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -205,7 +205,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -220,7 +220,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -235,7 +235,7 @@
   "color_id": 3,
   "size_id": null,
   "guarantee_id": 1,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -250,7 +250,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 3,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -265,7 +265,7 @@
   "color_id": 10,
   "size_id": null,
   "guarantee_id": 3,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -280,7 +280,7 @@
   "color_id": 2,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -295,7 +295,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -310,7 +310,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -325,7 +325,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -340,7 +340,7 @@
   "color_id": 3,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -355,7 +355,7 @@
   "color_id": 5,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -370,7 +370,7 @@
   "color_id": 2,
   "size_id": 3,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -385,7 +385,7 @@
   "color_id": 2,
   "size_id": 4,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -400,7 +400,7 @@
   "color_id": 6,
   "size_id": 3,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -415,7 +415,7 @@
   "color_id": 1,
   "size_id": 3,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -430,7 +430,7 @@
   "color_id": 2,
   "size_id": 3,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -445,7 +445,7 @@
   "color_id": 8,
   "size_id": null,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -460,7 +460,7 @@
   "color_id": 1,
   "size_id": null,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -475,7 +475,7 @@
   "color_id": 12,
   "size_id": null,
   "guarantee_id": 3,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -490,7 +490,7 @@
   "color_id": 3,
   "size_id": null,
   "guarantee_id": 3,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -505,7 +505,7 @@
   "color_id": null,
   "size_id": null,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -520,7 +520,7 @@
   "color_id": null,
   "size_id": null,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -535,7 +535,7 @@
   "color_id": null,
   "size_id": null,
   "guarantee_id": 4,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  },
@@ -550,7 +550,7 @@
   "color_id": 2,
   "size_id": null,
   "guarantee_id": 2,
-  "is_active": true,
+  "is_active": 1,
   "created_at": "2026-08-01T10:00:00Z",
   "updated_at": "2026-08-01T10:00:00Z"
  }

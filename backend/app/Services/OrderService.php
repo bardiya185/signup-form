@@ -274,4 +274,68 @@ final class OrderService
             ['orderNumber' => $fresh->order_number, 'status' => 'returned']);
         return Dto::orderDetailDto(Dto::find('orders', (int) $order->id));
     }
+
+    // ═══════════ ادمین ═══════════
+
+    public static function adminListOrders(?string $status, ?string $q, int $page, int $perPage): array
+    {
+        $list = Dto::rows('orders')->whereNull('deleted_at');
+        if ($status !== null && $status !== '') {
+            $list = $list->where('status', $status);
+        }
+        if ($q !== null && trim($q) !== '') {
+            $needle = trim($q);
+            $list = $list->filter(fn (object $o) => str_contains($o->order_number, $needle));
+        }
+        $list = $list->sortByDesc('created_at')->values();
+        return [
+            'items' => $list->slice(($page - 1) * $perPage, $perPage)->map(fn (object $o) => Dto::orderDetailDto($o))->values()->all(),
+            'total' => $list->count(),
+        ];
+    }
+
+    private const TRANSITIONS = [
+        'pending' => ['processing', 'cancelled'],
+        'processing' => ['shipped', 'cancelled'],
+        'shipped' => ['delivered'],
+        'delivered' => ['returned'],
+        'cancelled' => [],
+        'returned' => [],
+    ];
+
+    public static function adminUpdateOrderStatus(object $admin, int $orderId, string $newStatus, ?string $description = null): array
+    {
+        $order = Dto::find('orders', $orderId);
+        if (!$order) {
+            throw ApiException::notFound('سفارش یافت نشد');
+        }
+        if (!in_array($newStatus, self::TRANSITIONS[$order->status] ?? [], true)) {
+            throw ApiException::unprocessable(['status' => ["تغییر وضعیت از «{$order->status}» به «{$newStatus}» مجاز نیست"]]);
+        }
+        $oldStatus = $order->status;
+        $patch = ['status' => $newStatus, 'updated_at' => Dto::now()];
+        if ($newStatus === 'shipped') {
+            $patch['shipped_at'] = Dto::now();
+        }
+        if ($newStatus === 'delivered') {
+            $patch['delivered_at'] = Dto::now();
+        }
+        if ($newStatus === 'cancelled') {
+            $patch['cancelled_at'] = Dto::now();
+            $patch['cancellation_reason'] = $description ?? 'لغو توسط مدیر';
+            self::refundToWallet($order, "بازگشت وجه کنسلی سفارش {$order->order_number}");
+        }
+        if ($newStatus === 'returned') {
+            self::refundToWallet($order, "بازگشت وجه مرجوعی سفارش {$order->order_number}");
+        }
+        DB::table('orders')->where('id', $orderId)->update($patch);
+        Dto::flush();
+        $fresh = Dto::find('orders', $orderId);
+        self::pushHistory($fresh, $oldStatus, $description ?? '', (int) $admin->id);
+        Dto::notify((int) $fresh->user_id, 'order_status', 'به‌روزرسانی سفارش',
+            "وضعیت سفارش {$fresh->order_number} به «" . (Dto::ORDER_STATUS_FA[$newStatus] ?? $newStatus) . "» تغییر یافت.",
+            ['orderNumber' => $fresh->order_number, 'status' => $newStatus]);
+        Dto::flush();
+        return Dto::orderDetailDto(Dto::find('orders', $orderId));
+    }
 }

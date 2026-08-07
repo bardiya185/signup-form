@@ -1,148 +1,256 @@
+#!/usr/bin/env node
 /**
- * ژنراتور اسکیمای لاراول از روی src/types/domain.ts (منبع حقیقت اسکیما)
+ * مولد اسکیمای لاراول از حقیقتِ واحد پروژه:
+ *   - نقشه جدول → نوع:   interface Database در src/server/db/index.ts
+ *   - فیلدهای هر نوع:    interface های src/types/domain.ts
  * خروجی:
- *  - backend/database/migrations/2026_01_01_00XX01_create_<module>_tables.php
- *  - backend/app/Models/<Model>.php
+ *   - backend/database/migrations/2026_01_01_00XX0N_create_*_tables.php
+ *   - backend/app/Models/*.php
  * اجرا: node scripts/gen-laravel-schema.mjs
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import fs from 'fs';
+import path from 'path';
 
-const domainSrc = readFileSync('src/types/domain.ts', 'utf8');
+const ROOT = path.resolve(import.meta.dirname, '..');
+const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 
-// ── ۱) جدول ← اینترفیس (برابر Database در src/server/db/index.ts) و گروه‌بندی ماژولی ──
-const MODULES = [
-  ['core_users', { users: 'User', addresses: 'Address', provinces: 'Province', cities: 'City', otp_codes: 'OtpCode', personal_access_tokens: 'PersonalAccessToken' }],
-  ['catalog', { categories: 'Category', brands: 'Brand', colors: 'Color', sizes: 'Size', guarantees: 'Guarantee', attributes: 'Attribute', attribute_values: 'AttributeValue' }],
-  ['products', { products: 'Product', product_variants: 'ProductVariant', product_images: 'ProductImage', product_videos: 'ProductVideo', product_attributes: 'ProductAttribute', product_price_history: 'ProductPriceHistory', product_questions: 'ProductQuestion' }],
-  ['reviews', { reviews: 'Review', review_reactions: 'ReviewReaction', review_images: 'ReviewImage' }],
-  ['orders', { carts: 'Cart', cart_items: 'CartItem', orders: 'Order', order_items: 'OrderItem', order_status_history: 'OrderStatusHistory', shipping_methods: 'ShippingMethod' }],
-  ['payments', { payments: 'Payment', wallets: 'Wallet', wallet_transactions: 'WalletTransaction' }],
-  ['discounts', { coupons: 'Coupon', special_offers: 'SpecialOffer' }],
-  ['engagement', { wishlists: 'Wishlist', compare_lists: 'CompareList', compare_list_items: 'CompareListItem', notifications: 'AppNotification', push_subscriptions: 'PushSubscription' }],
-  ['cms', { pages: 'Page', banners: 'Banner', sliders: 'Slider', menus: 'Menu', blog_posts: 'BlogPost', faqs: 'Faq' }],
-  ['sellers', { sellers: 'Seller', seller_settlements: 'SellerSettlement' }],
-  ['support', { tickets: 'Ticket', ticket_messages: 'TicketMessage' }],
-  ['analytics', { page_views: 'PageView', search_logs: 'SearchLog', product_clicks: 'ProductClick', activity_logs: 'ActivityLog', stock_alerts: 'StockAlert', stock_movements: 'StockMovement', settings: null }],
+// ─── ۱) نقشه جدول‌ها از interface Database ───
+const indexTs = read('src/server/db/index.ts');
+const dbMatch = indexTs.match(/interface Database \{([\s\S]*?)\n\}/);
+if (!dbMatch) throw new Error('interface Database پیدا نشد');
+const TABLE_TYPES = []; // [table, TypeName | 'record']
+for (const line of dbMatch[1].split('\n')) {
+  const m = line.match(/^\s*(\w+)(\?)?:\s*D\.(\w+)\[\];/);
+  if (m) { TABLE_TYPES.push([m[1], m[3]]); continue; }
+  const r = line.match(/^\s*(\w+):\s*Record<string,\s*string>;/);
+  if (r) TABLE_TYPES.push([r[1], 'record']);
+}
+
+// ─── ۲) پارس interface های domain.ts ───
+const domainTs = read('src/types/domain.ts');
+const INTERFACES = {};
+// type alias ها: export type AttributeType = 'select' | 'text'; / export type ID = number;
+const ALIASES = {};
+for (const m of domainTs.matchAll(/export type (\w+)\s*=\s*([^;]+);/g)) {
+  ALIASES[m[1]] = m[2].trim();
+}
+const resolveAlias = (t) => {
+  // نرمال‌سازی union (پشتیبانی از | پیش‌انتهایی چندخطی) + باز کردن alias تک‌سطحی
+  const out = [];
+  const walk = (type, depth = 0) => {
+    for (const part of type.split('|').map((p) => p.trim()).filter(Boolean)) {
+      if (depth < 3 && ALIASES[part] !== undefined && part !== 'ID' && part !== 'ISODateString') {
+        // باز کردن alias (ID و ISODateString به primitive ترجمه می‌شوند)
+        walk(ALIASES[part], depth + 1);
+      } else if (part === 'ID') {
+        out.push('number');
+      } else if (part === 'ISODateString') {
+        out.push('string');
+      } else {
+        out.push(part);
+      }
+    }
+  };
+  walk(t);
+  return out.join(' | ');
+};
+const ifaceRe = /export interface (\w+) \{([\s\S]*?)\n\}/g;
+let im;
+while ((im = ifaceRe.exec(domainTs)) !== null) {
+  const [, name, body] = im;
+  const fields = [];
+  for (const line of body.split('\n')) {
+    const fm = line.match(/^\s*(\w+)(\?)?:\s*(.+?);?\s*$/);
+    if (!fm) continue;
+    let type = fm[3].replace(/\/\/.*$/, '').trim().replace(/;$/, '').trim();
+    type = resolveAlias(type);
+    fields.push({ name: fm[1], optional: !!fm[2], type });
+  }
+  INTERFACES[name] = fields;
+}
+
+// ─── ۳) قوانین نگاشت نوع ───
+const TEXT_FIELDS = new Set([
+  'body', 'description', 'short_description', 'meta_description', 'address',
+  'cancellation_reason', 'reason', 'answer', 'note', 'message', 'payload',
+]);
+const DECIMAL_FIELDS = new Map([
+  ['rating', [5, 2]], ['commission_rate', [5, 2]], ['lat', [10, 7]], ['lng', [10, 7]],
+]);
+const SMALL_INT_FIELDS = new Set([
+  'stock', 'sold_count', 'view_count', 'rating', 'discount_percentage', 'sort_order',
+  'quantity', 'max_per_order', 'usage_limit', 'used_count', 'per_user_limit', 'months',
+  'priority_level', 'days', 'return_period_days',
+]);
+const INDEXED_STRINGS = new Set(['slug', 'phone', 'email', 'order_number', 'token', 'code', 'session_id', 'transaction_id', 'authority']);
+const STRING_LEN = new Map([['token', 120], ['transaction_id', 120], ['authority', 120], ['ref_number', 60]]);
+
+const isStringLiteralUnion = (t) => /^'[^']*'(\s*\|\s*('[^']*'|null))*$/.test(t) && t.includes("'");
+
+function literalLen(t) {
+  const lits = [...t.matchAll(/'([^']*)'/g)].map((m) => m[1].length);
+  const max = lits.length ? Math.max(...lits) : 10;
+  return Math.min(60, Math.max(20, max + 6));
+}
+
+function colLine(f) {
+  const raw = f.type.replace(/\s+/g, '');
+  const nullable = f.optional || raw.includes('null');
+  const n = f.name;
+
+  const isNumeric = (t) => /^number(\||$|\s|\[)/.test(t) || /^ID(\||$|\s)/.test(t);
+  if (n === 'id' && isNumeric(raw)) return { line: '            $table->id();' };
+  if (/(_at)$/.test(n)) return { ts: n };
+  if (DECIMAL_FIELDS.has(n)) {
+    const [p, s] = DECIMAL_FIELDS.get(n);
+    return { line: `            $table->decimal('${n}', ${p}, ${s})${nullable ? '->nullable()' : ''};` };
+  }
+  if (raw.includes('boolean')) return { line: `            $table->boolean('${n}')${nullable ? '->nullable()' : ''};` };
+  if (raw.includes('number') && (raw.includes('[]') || raw.includes('Record'))) {
+    return { line: `            $table->json('${n}')->nullable();` };
+  }
+  if (raw.startsWith('number[]') || raw.startsWith('ID[]') || isNumeric(raw)) {
+    if (/^(number|ID)(\|null)?$/.test(raw)) {
+      if (/_id$/.test(n) || n === 'changed_by' || n === 'parent_id') {
+        return { line: `            $table->unsignedBigInteger('${n}')${nullable ? '->nullable()' : ''};\n            $table->index('${n}');` };
+      }
+      const kind = SMALL_INT_FIELDS.has(n) ? 'unsignedInteger' : 'unsignedBigInteger';
+      return { line: `            $table->${kind}('${n}')${nullable ? '->nullable()' : ''};` };
+    }
+    return { line: `            $table->json('${n}')->nullable();` };
+  }
+  if (raw.includes('boolean') === false && (raw.includes('[]') || raw.includes('Json') || raw.includes('Record') || /^D\./.test(raw) || /^[A-Z]\w+(\|null)?$/.test(raw))) {
+    return { line: `            $table->json('${n}')->nullable();` };
+  }
+  if (isStringLiteralUnion(raw)) {
+    const enums = [...raw.matchAll(/'([^']*)'/g)].map((m) => m[1]).join(',');
+    return { line: `            $table->string('${n}', ${literalLen(raw)})${nullable ? '->nullable()' : ''}; // enum: ${enums}` };
+  }
+  if (raw === 'string' || raw === 'string|null') {
+    if (TEXT_FIELDS.has(n)) return { line: `            $table->text('${n}')${nullable ? '->nullable()' : ''};` };
+    const len = STRING_LEN.get(n) ?? 191;
+    const idx = INDEXED_STRINGS.has(n) ? `\n            $table->index('${n}');` : '';
+    return { line: `            $table->string('${n}', ${len})${nullable ? '->nullable()' : ''};${idx}` };
+  }
+  return { line: `            $table->json('${n}')->nullable(); // TODO: ${raw}` };
+}
+
+function tableSchema(table, typeName) {
+  if (typeName === 'record') {
+    return {
+      up: [
+        '            $table->string(\'key\')->primary();',
+        '            $table->text(\'value\')->nullable();',
+      ].join('\n'),
+      casts: {}, timestamps: false, softDeletes: false,
+    };
+  }
+  const fields = INTERFACES[typeName];
+  if (!fields) throw new Error(`interface ${typeName} برای جدول ${table} پیدا نشد`);
+  const lines = [];
+  const casts = {};
+  const tsNames = new Set();
+  for (const f of fields) {
+    const res = colLine(f);
+    if (res.ts) { tsNames.add(res.ts); continue; }
+    lines.push(res.line);
+  }
+  // فیلدهای boolean/json برای casts
+  for (const f of fields) {
+    const raw = f.type.replace(/\s+/g, '');
+    if (raw.includes('boolean')) casts[f.name] = 'boolean';
+    else if (raw.includes('[]') || raw.includes('Json') || raw.includes('Record') || (/^D\./.test(raw) && !raw.endsWith('_at'))) casts[f.name] = 'array';
+    else if (DECIMAL_FIELDS.has(f.name)) casts[f.name] = `decimal:${DECIMAL_FIELDS.get(f.name)[1]}`;
+    else if (/(_at)$/.test(f.name)) casts[f.name] = 'datetime';
+  }
+  const hasCreated = tsNames.has('created_at');
+  const hasUpdated = tsNames.has('updated_at');
+  const timestamps = hasCreated && hasUpdated;
+  for (const t of tsNames) {
+    if (t === 'created_at' && timestamps) continue;
+    if (t === 'updated_at' && timestamps) continue;
+    if (t === 'deleted_at') continue;
+    lines.push(`            $table->timestamp('${t}')->nullable();`);
+  }
+  if (timestamps) lines.push('            $table->timestamps();');
+  if (hasCreated && !hasUpdated) lines.push("            // created_at به‌صورت دستی مدیریت می‌شود");
+  const softDeletes = tsNames.has('deleted_at');
+  if (softDeletes) lines.push('            $table->softDeletes();');
+  return { up: lines.join('\n'), casts, timestamps, softDeletes };
+}
+
+// ─── ۴) گروه‌بندی جداول در مهاجرت‌ها ───
+const GROUPS = [
+  ['core_users', ['users', 'otp_codes', 'personal_access_tokens', 'addresses', 'provinces', 'cities', 'settings']],
+  ['catalog', ['categories', 'brands', 'attributes', 'attribute_values', 'colors', 'sizes', 'guarantees', 'shipping_methods']],
+  ['products', ['products', 'product_variants', 'product_images', 'product_videos', 'product_attributes', 'product_price_history']],
+  ['reviews', ['reviews', 'review_reactions', 'review_images']],
+  ['orders', ['carts', 'cart_items', 'orders', 'order_items', 'order_status_history']],
+  ['payments', ['payments', 'wallets', 'wallet_transactions']],
+  ['discounts', ['coupons', 'special_offers', 'wishlists', 'compare_lists', 'compare_list_items']],
+  ['engagement', ['notifications', 'push_subscriptions', 'stock_alerts', 'stock_movements', 'activity_logs']],
+  ['cms', ['pages', 'banners', 'sliders', 'menus', 'blog_posts', 'faqs']],
+  ['sellers', ['sellers', 'seller_settlements']],
+  ['support', ['tickets', 'ticket_messages']],
+  ['analytics', ['page_views', 'search_logs', 'product_clicks']],
 ];
 
-// ── ۲) پارس union typeها و interfaceها ──
-const UNIONS = {};
-for (const m of domainSrc.matchAll(/export type (\w+)\s*=\s*([\s\S]*?);/g)) {
-  const values = [...m[2].matchAll(/'([^']+)'/g)].map((v) => v[1]);
-  if (values.length) UNIONS[m[1]] = values;
-}
-const IFACES = {};
-for (const m of domainSrc.matchAll(/export interface (\w+) \{([\s\S]*?)\n\}/g)) {
-  const fields = [];
-  for (const line of m[2].split('\n')) {
-    const f = line.match(/^\s*(\w+)(\?)?:\s*([^;]+);/);
-    if (f) fields.push({ name: f[1], optional: !!f[2], type: f[3].split('//')[0].replace(/\s+/g, '') });
-  }
-  IFACES[m[1]] = fields;
-}
-const tableIfaces = new Set(Object.values(Object.fromEntries(MODULES.map(([, t]) => t))).flat().filter(Boolean));
-const OVERRIDES = { notifications: 'AppNotification', settings: 'Setting', addresses: 'Address', categories: 'Category', cities: 'City' };
+const covered = new Set(GROUPS.flatMap(([, t]) => t));
+const leftovers = TABLE_TYPES.map(([t]) => t).filter((t) => !covered.has(t));
+if (leftovers.length) GROUPS.push(['misc', leftovers]);
 
-// فیلدهای متنی بلند
-const TEXT_FIELDS = new Set(['body', 'full_address', 'short_description', 'description', 'answer', 'question', 'notes', 'cancellation_reason', 'excerpt', 'endpoint', 'user_agent', 'address']);
-const UNIQUE = new Set(['users.phone', 'orders.order_number', 'coupons.code', 'products.sku', 'categories.slug', 'brands.slug']);
-const INDEXED = new Set(['status', 'role', 'type', 'position', 'department', 'priority', 'method', 'slug']);
-const MONEY = /(price|amount|cost|balance|subtotal|tax|discount|value|max_per_order|^stock$|^sold_count$)/;
+// ─── ۵) تولید فایل‌ها ───
+const migDir = path.join(ROOT, 'backend/database/migrations');
+const modelDir = path.join(ROOT, 'backend/app/Models');
+fs.mkdirSync(migDir, { recursive: true });
+fs.mkdirSync(modelDir, { recursive: true });
 
-function col(table, f, next) {
-  const { name } = f;
-  let base = f.type.replace(/\|null/g, '');
-  const nullable = f.optional || f.type.includes('|null');
-  const N = nullable ? '->nullable()' : '';
-
-  if (name === 'id' && base === 'ID') return [`$table->id();`];
-  if (name === 'deleted_at') return [`$table->softDeletes();`];
-  if (name === 'created_at' && next?.name === 'updated_at' && next.type.includes('ISODateString'))
-    return [`$table->timestamps();`, 'skip'];
-  if (name === 'created_at') return [`$table->timestamp('created_at')${N};`];
-  if (name === 'updated_at') return [`$table->timestamp('updated_at')${N};`];
-  if (base === 'ISODateString') return [`$table->${name === 'birth_date' ? 'date' : 'timestamp'}('${name}')${N};`];
-  if (base === 'boolean') return [`$table->boolean('${name}');`];
-  if (base === 'number') {
-    if (name === 'lat') return [`$table->decimal('lat', 10, 7)${N};`];
-    if (name === 'lng') return [`$table->decimal('lng', 11, 7)${N};`];
-    if (name === 'commission_rate') return [`$table->decimal('commission_rate', 5, 2);`];
-    if (name === 'rating' && table === 'sellers') return [`$table->decimal('rating', 3, 1)->default(0);`];
-    if (name === 'rating') return [`$table->unsignedTinyInteger('rating');`];
-    if (name === 'discount_percentage') return [`$table->unsignedInteger('discount_percentage');`];
-    if (MONEY.test(name)) return [`$table->unsignedBigInteger('${name}')${N};`];
-    return [`$table->unsignedInteger('${name}')${N};`];
-  }
-  if (base === 'ID') return [`$table->unsignedBigInteger('${name}')${N}->index();`];
-  if (base === 'string') {
-    if (TEXT_FIELDS.has(name)) return [`$table->text('${name}')${N};`];
-    const u = UNIQUE.has(`${table}.${name}`) ? '->unique()' : INDEXED.has(name) ? '->index()' : '';
-    const len = name === 'shaba_number' ? 26 : name === 'phone' || name === 'receiver_phone' ? 16 : name === 'national_code' || name === 'postal_code' ? 16 : name === 'hex_code' ? 9 : null;
-    return [`$table->string('${name}'${len ? `, ${len}` : ''})${u}${N};`];
-  }
-  // union enum محلی
-  if (UNIONS[base])
-    return [
-      `$table->string('${name}', ${Math.max(20, ...UNIONS[base].map((v) => v.length + 4))})${INDEXED.has(name) ? '->index()' : ''}${N}; // enum: ${UNIONS[base].join(' | ')}`,
-    ];
-  // عددی یونیون مثل rating: 1|2|3|4|5
-  if (/^\d+(\|\d+)+$/.test(base)) return [`$table->unsignedTinyInteger('${name}');`];
-  // آرایه / Json / آبجکت تو در تو
-  if (base.endsWith('[]') || base === 'Json' || (IFACES[base] && !tableIfaces.has(base)))
-    return [`$table->json('${name}')${N};`];
-  return [`$table->string('${name}')${N}; /* TODO ${f.type} */`];
+// مهاجرت‌های پیش‌فرض لاراول: users/cache/jobs — ما خودمان users را می‌سازیم
+for (const f of fs.readdirSync(migDir)) {
+  if (f.includes('create_users_table')) fs.rmSync(path.join(migDir, f));
 }
 
-function casts(table, fields) {
-  const c = {};
-  for (const f of fields) {
-    const base = f.type.replace(/\|null/g, '');
-    if (['id', 'created_at', 'updated_at', 'deleted_at'].includes(f.name)) continue;
-    if (base === 'boolean') c[f.name] = 'boolean';
-    else if (base === 'ISODateString') c[f.name] = f.name === 'birth_date' ? 'date' : 'datetime';
-    else if (base === 'number') c[f.name] = ['lat', 'lng'].includes(f.name) ? 'decimal:7' : f.name === 'commission_rate' ? 'decimal:2' : f.name === 'rating' && table === 'sellers' ? 'decimal:1' : 'integer';
-    else if (base.endsWith('[]') || base === 'Json' || (IFACES[base] && !tableIfaces.has(base))) c[f.name] = 'array';
-    else if (/^\d+(\|\d+)+$/.test(base)) c[f.name] = 'integer';
-    else if (base === 'ID') c[f.name] = 'integer';
-  }
-  return c;
-}
-
-// ── ۳) تولید مایگریشن‌ها ──
-mkdirSync('backend/database/migrations', { recursive: true });
-mkdirSync('backend/app/Models', { recursive: true });
-let seq = 0;
-for (const [module, tables] of MODULES) {
-  seq += 1;
+const typeByTable = Object.fromEntries(TABLE_TYPES);
+let count = 0;
+GROUPS.forEach(([gname, tables], gi) => {
   const up = [];
   const down = [];
-  for (const [table, iface] of Object.entries(tables)) {
-    if (table === 'settings') {
-      up.push(`        Schema::create('settings', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->text('value');
-        });`);
-    } else {
-      const fields = IFACES[iface];
-      const lines = [];
-      for (let i = 0; i < fields.length; i++) {
-        const [line, flag] = col(table, fields[i], fields[i + 1]);
-        lines.push(line);
-        if (flag === 'skip') i++;
-      }
-      up.push(`        Schema::create('${table}', function (Blueprint $table) {
-            ${lines.join('\n            ')}
-        });`);
+  const creates = [];
+  tables.forEach((table, ti) => {
+    const type = typeByTable[table];
+    if (!type) throw new Error(`جدول ${table} در Database نیست`);
+    const sch = tableSchema(table, type);
+    creates.push(`        Schema::create('${table}', function (Blueprint $table): void {\n${sch.up}\n        });`);
+    down.push(`        Schema::dropIfExists('${table}');`);
+    // مدل
+    if (type !== 'record') {
+      const casts = Object.entries(sch.casts);
+      const castBlock = casts.length
+        ? `\n    protected $casts = [\n${casts.map(([k, v]) => `        '${k}' => '${v}',`).join('\n')}\n    ];\n`
+        : '\n';
+      const ts = sch.timestamps ? '' : '\n    public $timestamps = false;\n';
+      const sd = sch.softDeletes ? '\n    use SoftDeletes;\n' : '';
+      const sdImport = sch.softDeletes ? "use Illuminate\\Database\\Eloquent\\SoftDeletes;\n" : '';
+      const model = `<?php
+
+namespace App\\Models;
+
+use Illuminate\\Database\\Eloquent\\Model;
+${sdImport}
+class ${type} extends Model
+{${sd}
+    protected $table = '${table}';
+
+    protected $guarded = [];
+${ts}${castBlock}}
+`;
+      fs.writeFileSync(path.join(modelDir, `${type}.php`), model);
+      count++;
     }
-    down.unshift(`        Schema::dropIfExists('${table}');`);
-  }
+  });
+  const stamp = `2026_01_01_00${String(gi + 1).padStart(2, '0')}01`;
   const php = `<?php
 
-/**
- * مایگریشن ماژول ${module} — تولیدشده خودکار از src/types/domain.ts
- * نکته: کلیدهای خارجی عمداً به‌صورت index تعریف شده‌اند (بدون constraint) تا
- * سید/ترانکت ساده بماند؛ در سخت‌گیری پروداکشن می‌توان FK اضافه کرد.
- */
 use Illuminate\\Database\\Migrations\\Migration;
 use Illuminate\\Database\\Schema\\Blueprint;
 use Illuminate\\Support\\Facades\\Schema;
@@ -151,7 +259,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-${up.join('\n')}
+${creates.join('\n\n')}
     }
 
     public function down(): void
@@ -160,54 +268,8 @@ ${down.join('\n')}
     }
 };
 `;
-  writeFileSync(`backend/database/migrations/2026_01_01_00${String(seq).padStart(2, '0')}01_create_${module}_tables.php`, php);
-  console.log(`migration: ${module} (${Object.keys(tables).length} tables)`);
-}
+  fs.writeFileSync(path.join(migDir, `${stamp}_create_${gname}_tables.php`), php);
+});
 
-// ── ۴) تولید مدل‌ها ──
-for (const [, tables] of MODULES) {
-  for (const [table, iface] of Object.entries(tables)) {
-    if (table === 'settings') {
-      writeFileSync(`backend/app/Models/Setting.php`, `<?php
-
-namespace App\\Models;
-
-use Illuminate\\Database\\Eloquent\\Model;
-
-/** جدول تنظیمات سراسری (key/value) */
-class Setting extends Model
-{
-    protected $table = 'settings';
-    protected $primaryKey = 'key';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    public $timestamps = false;
-    protected $guarded = [];
-}
-`);
-      continue;
-    }
-    const model = OVERRIDES[table] ?? iface;
-    const fields = IFACES[iface];
-    const hasTs = fields.some((f) => f.name === 'created_at') && fields.some((f) => f.name === 'updated_at');
-    const hasSoft = fields.some((f) => f.name === 'deleted_at');
-    const csts = casts(table, fields);
-    const castLines = Object.entries(csts).map(([k, v]) => `            '${k}' => '${v}',`);
-    const php = `<?php
-
-namespace App\\Models;
-
-use Illuminate\\Database\\Eloquent\\Model;
-${hasSoft ? "use Illuminate\\Database\\Eloquent\\SoftDeletes;\n" : ''}
-/** جدول ${table} — معادل اینترفیس ${iface} در domain.ts */
-class ${model} extends Model
-{
-${hasSoft ? '    use SoftDeletes;\n\n' : ''}    protected $table = '${table}';
-    protected $guarded = [];
-${hasTs ? '' : '    public $timestamps = false;\n'}
-${castLines.length ? `    protected $casts = [\n${castLines.join('\n')}\n    ];\n` : ''}}
-`;
-    writeFileSync(`backend/app/Models/${model}.php`, php);
-  }
-}
-console.log('✓ migrations + models generated');
+console.log(`✓ ${GROUPS.length} مهاجرت (${covered.size + leftovers.length} جدول) و ${count} مدل ساخته شد`);
+console.log('گروه‌ها:', GROUPS.map(([g, t]) => `${g}(${t.length})`).join(' '));

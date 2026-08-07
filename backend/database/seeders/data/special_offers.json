@@ -10,7 +10,7 @@
   "sold_count": 24,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -25,7 +25,7 @@
   "sold_count": 58,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -40,7 +40,7 @@
   "sold_count": 31,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -55,7 +55,7 @@
   "sold_count": 92,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -70,7 +70,7 @@
   "sold_count": 43,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -85,7 +85,7 @@
   "sold_count": 12,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -100,7 +100,7 @@
   "sold_count": 71,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  },
@@ -115,7 +115,7 @@
   "sold_count": 134,
   "starts_at": "2026-08-06T00:00:00Z",
   "expires_at": "2026-08-10T23:59:59Z",
-  "is_active": true,
+  "is_active": 1,
   "created_at": "",
   "updated_at": ""
  }

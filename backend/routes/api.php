@@ -6,8 +6,19 @@
  * خطاها: 422 { message, errors } فارسی | 401 | 403 | 404
  * احراز: Bearer token (جدول personal_access_tokens)
  *
- * فاز ۳: فروشگاه و حساب کاربری (فاز ۴: پنل‌های admin/seller/warehouse)
+ * فاز ۳: فروشگاه و حساب کاربری ✅ | فاز ۴: پنل‌های admin / seller / warehouse ✅
  */
+use App\Http\Controllers\Api\V1\Admin\AdminCatalogController;
+use App\Http\Controllers\Api\V1\Admin\AdminDashboardController;
+use App\Http\Controllers\Api\V1\Admin\AdminEngagementController;
+use App\Http\Controllers\Api\V1\Admin\AdminLogsController;
+use App\Http\Controllers\Api\V1\Admin\AdminOrderController;
+use App\Http\Controllers\Api\V1\Admin\AdminPaymentController;
+use App\Http\Controllers\Api\V1\Admin\AdminProductController;
+use App\Http\Controllers\Api\V1\Admin\AdminPromotionController;
+use App\Http\Controllers\Api\V1\Admin\AdminSettingsController;
+use App\Http\Controllers\Api\V1\Admin\AdminTicketController;
+use App\Http\Controllers\Api\V1\Admin\AdminUserController;
 use App\Http\Controllers\Api\V1\AddressController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
@@ -17,8 +28,10 @@ use App\Http\Controllers\Api\V1\EngagementController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\PaymentController;
 use App\Http\Controllers\Api\V1\SearchController;
+use App\Http\Controllers\Api\V1\SellerController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\WalletController;
+use App\Http\Controllers\Api\V1\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -80,6 +93,18 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/products/{slug}/questions', [CatalogController::class, 'storeQuestion']);
     });
 
+    // ─── پنل فروشنده (توکن لازم؛ seller مالک فروشگاه یا pending) ───
+    Route::middleware('auth.token')->prefix('seller')->group(function (): void {
+        Route::post('/register', [SellerController::class, 'register']);
+        Route::get('/dashboard', [SellerController::class, 'dashboard']);
+        Route::get('/products', [SellerController::class, 'products']);
+        Route::post('/products', [SellerController::class, 'storeProduct']);
+        Route::put('/products/{id}', [SellerController::class, 'updateProduct'])->whereNumber('id');
+        Route::get('/orders', [SellerController::class, 'orders']);
+        Route::get('/settlements', [SellerController::class, 'settlements']);
+        Route::get('/analytics', [SellerController::class, 'analytics']);
+    });
+
     // ─── سبد و مقایسه (توکن اختیاری — مهمان هم دارد) ───
     Route::middleware('auth.optional')->group(function (): void {
         Route::get('/cart', [CartController::class, 'show']);
@@ -132,4 +157,79 @@ Route::prefix('v1')->group(function (): void {
     // ─── درگاه سندباکس ───
     Route::get('/payments/verify', [PaymentController::class, 'verify']);
     Route::get('/payments/callback/{gateway}', [PaymentController::class, 'callback']);
+
+    // ─── پنل ادمین (نقش: admin / super_admin) ───
+    Route::middleware(['auth.token', 'role:admin,super_admin'])->prefix('admin')->group(function (): void {
+        Route::get('/dashboard', [AdminDashboardController::class, 'dashboard']);
+        Route::get('/reports/sales', [AdminDashboardController::class, 'salesReport']);
+        Route::get('/reports/products', [AdminDashboardController::class, 'productsReport']);
+        Route::get('/reports/users', [AdminDashboardController::class, 'usersReport']);
+        Route::get('/reports/revenue', [AdminDashboardController::class, 'revenueReport']);
+
+        Route::get('/products', [AdminProductController::class, 'index']);
+        Route::post('/products', [AdminProductController::class, 'store']);
+        Route::put('/products/{id}', [AdminProductController::class, 'update'])->whereNumber('id');
+        Route::delete('/products/{id}', [AdminProductController::class, 'destroy'])->whereNumber('id');
+
+        Route::get('/orders', [AdminOrderController::class, 'index']);
+        Route::get('/orders/{id}', [AdminOrderController::class, 'show'])->whereNumber('id');
+        Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->whereNumber('id');
+
+        Route::get('/users', [AdminUserController::class, 'users']);
+        Route::put('/users/{id}', [AdminUserController::class, 'updateUser'])->whereNumber('id');
+
+        Route::get('/sellers', [AdminUserController::class, 'sellers']);
+        Route::put('/sellers/{id}', [AdminUserController::class, 'updateSeller'])->whereNumber('id');
+
+        Route::get('/categories', [AdminCatalogController::class, 'categories']);
+        Route::post('/categories', [AdminCatalogController::class, 'storeCategory']);
+        Route::put('/categories/{id}', [AdminCatalogController::class, 'updateCategory'])->whereNumber('id');
+        Route::delete('/categories/{id}', [AdminCatalogController::class, 'destroyCategory'])->whereNumber('id');
+
+        Route::get('/brands', [AdminCatalogController::class, 'brands']);
+        Route::post('/brands', [AdminCatalogController::class, 'storeBrand']);
+        Route::put('/brands/{id}', [AdminCatalogController::class, 'updateBrand'])->whereNumber('id');
+        Route::delete('/brands/{id}', [AdminCatalogController::class, 'destroyBrand'])->whereNumber('id');
+
+        Route::get('/coupons', [AdminPromotionController::class, 'coupons']);
+        Route::post('/coupons', [AdminPromotionController::class, 'storeCoupon']);
+        Route::put('/coupons/{id}', [AdminPromotionController::class, 'updateCoupon'])->whereNumber('id');
+        Route::delete('/coupons/{id}', [AdminPromotionController::class, 'destroyCoupon'])->whereNumber('id');
+
+        Route::get('/offers', [AdminPromotionController::class, 'offers']);
+        Route::post('/offers', [AdminPromotionController::class, 'storeOffer']);
+        Route::put('/offers/{id}', [AdminPromotionController::class, 'updateOffer'])->whereNumber('id');
+        Route::delete('/offers/{id}', [AdminPromotionController::class, 'destroyOffer'])->whereNumber('id');
+
+        Route::get('/reviews', [AdminEngagementController::class, 'reviews']);
+        Route::put('/reviews/{id}', [AdminEngagementController::class, 'moderateReview'])->whereNumber('id');
+        Route::delete('/reviews/{id}', [AdminEngagementController::class, 'destroyReview'])->whereNumber('id');
+
+        Route::get('/banners', [AdminEngagementController::class, 'banners']);
+        Route::post('/banners', [AdminEngagementController::class, 'storeBanner']);
+        Route::put('/banners/{id}', [AdminEngagementController::class, 'updateBanner'])->whereNumber('id');
+        Route::delete('/banners/{id}', [AdminEngagementController::class, 'destroyBanner'])->whereNumber('id');
+
+        Route::get('/payments', [AdminPaymentController::class, 'index']);
+
+        Route::get('/tickets', [AdminTicketController::class, 'index']);
+        Route::get('/tickets/{id}', [AdminTicketController::class, 'show'])->whereNumber('id');
+        Route::put('/tickets/{id}', [AdminTicketController::class, 'close'])->whereNumber('id');
+        Route::post('/tickets/{id}/messages', [AdminTicketController::class, 'reply'])->whereNumber('id');
+
+        Route::get('/settings', [AdminSettingsController::class, 'show']);
+        Route::post('/settings', [AdminSettingsController::class, 'update']);
+
+        Route::get('/logs', [AdminLogsController::class, 'index']);
+    });
+
+    // ─── پنل انبار (نقش: warehouse + مدیران) ───
+    Route::middleware(['auth.token', 'role:warehouse,admin,super_admin'])->prefix('warehouse')->group(function (): void {
+        Route::get('/dashboard', [WarehouseController::class, 'dashboard']);
+        Route::get('/inventory', [WarehouseController::class, 'inventory']);
+        Route::put('/inventory/{id}', [WarehouseController::class, 'adjustStock'])->whereNumber('id');
+        Route::get('/shipments', [WarehouseController::class, 'shipments']);
+        Route::put('/shipments/{id}/ship', [WarehouseController::class, 'ship'])->whereNumber('id');
+        Route::get('/movements', [WarehouseController::class, 'movements']);
+    });
 });

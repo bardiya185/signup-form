@@ -147,4 +147,21 @@ final class PaymentService
             'total' => $list->count(),
         ];
     }
+
+    // ─── ادمین: همه پرداخت‌ها با فیلتر ───
+    public static function adminListPayments(?string $status, ?string $method, int $page, int $perPage): array
+    {
+        $list = Dto::rows('payments');
+        if ($status !== null && $status !== '') {
+            $list = $list->where('status', $status);
+        }
+        if ($method !== null && $method !== '') {
+            $list = $list->where('method', $method);
+        }
+        $list = $list->sortByDesc('created_at')->values();
+        return [
+            'items' => $list->slice(($page - 1) * $perPage, $perPage)->map(fn (object $p) => Dto::paymentDto($p))->values()->all(),
+            'total' => $list->count(),
+        ];
+    }
 }
