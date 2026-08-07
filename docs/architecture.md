@@ -11,7 +11,7 @@
 | Laravel | معادل در این پروژه |
 |---|---|
 | Migrations + Eloquent Models | `src/types/domain.ts` (تمام ۱۲ ماژول اسکیما، فیلدبه‌فیلد) |
-| Database (MySQL) | `src/server/db` — دیتابیس درون‌حافظه‌ای + Seed واقع‌گرایانه (`src/server/db/data/*`) |
+| Database (MySQL) | `src/server/db` — دیتابیس واقعی **SQLite** روی دیسک (`data/ginankala.sqlite`؛ لایه ماندگاری `sqlite.ts` با write-through اتمیک) + Seed واقع‌گرایانه (`src/server/db/data/*`) — آماده انتقال به MySQL لاراول در `backend/` (ر.ک. `docs/laravel-plan.md`) |
 | Eloquent Queries / Scopes | `src/server/repositories/*.repository.ts` |
 | API Resources | `src/server/serializers.ts` + `src/types/dto.ts` |
 | Controllers + routes/api.php | `src/app/api/v1/**/route.ts` |

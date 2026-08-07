@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { persistDb } from '@/server/db';
 
 /** خطای کنترل‌شده API — معادل HttpException لاراول */
 export class ApiError extends Error {
@@ -31,7 +32,14 @@ export function apiHandler<A extends unknown[]>(
 ) {
   return async (...args: A): Promise<Response> => {
     try {
-      return await fn(...args);
+      const res = await fn(...args);
+      // write-through به دیتابیس SQLite بعد از هر پاسخ موفق
+      try {
+        persistDb();
+      } catch (pe) {
+        console.error('[DB PERSIST]', pe);
+      }
+      return res;
     } catch (e) {
       if (e instanceof ApiError) {
         return NextResponse.json({ message: e.message, errors: e.errors }, { status: e.status });

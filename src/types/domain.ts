@@ -15,7 +15,7 @@ export type Json = Record<string, unknown>;
 // ─────────────────────────────────────────────
 
 export type UserStatus = 'active' | 'banned' | 'inactive';
-export type UserRole = 'super_admin' | 'admin' | 'seller' | 'customer';
+export type UserRole = 'super_admin' | 'admin' | 'seller' | 'customer' | 'warehouse';
 export type Gender = 'male' | 'female';
 
 export interface User {
@@ -783,6 +783,18 @@ export interface StockAlert {
   user_id: ID | null;
   phone: string | null;
   product_variant_id: ID;
+  created_at: ISODateString;
+}
+
+/** گردش موجودی انبار — معادل جدول stock_movements */
+export interface StockMovement {
+  id: ID;
+  product_variant_id: ID;
+  old_stock: number;
+  new_stock: number;
+  delta: number;
+  reason: string;
+  changed_by: ID | null; // users.id (انباردار/ادمین)
   created_at: ISODateString;
 }
 

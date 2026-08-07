@@ -1,9 +1,11 @@
 /**
- * ─── دیتابیس درون‌حافظه‌ای (Mock DB) ───
- * ساختار دقیقاً معادل جداول لاراول است؛ در نسخه پروداکشن این لایه
- * با اتصال واقعی به MySQL لاراول جایگزین می‌شود.
+ * ─── لایه دیتابیس ───
+ * داده‌ها روی دیتابیس واقعی SQLite (data/ginankala.sqlite) ماندگار می‌شوند؛
+ * بارگذاری/ذخیره در ./sqlite.ts انجام می‌شود. ساختار جداول دقیقاً معادل
+ * جداول لاراول است؛ در نسخه پروداکشن همین داده‌ها به MySQL لاراول منتقل می‌شود.
  */
 import type * as D from '@/types/domain';
+import { loadFromSqlite, persistToSqlite } from './sqlite';
 import { attributes, attributeValues, colors, guarantees, sizes } from './data/lookups';
 import { cities, provinces } from './data/geo';
 import { brands, categories } from './data/catalog';
@@ -76,6 +78,7 @@ export interface Database {
   personal_access_tokens: D.PersonalAccessToken[];
   activity_logs: D.ActivityLog[];
   stock_alerts: D.StockAlert[];
+  stock_movements: D.StockMovement[];
   settings: Record<string, string>;
 }
 
@@ -113,14 +116,30 @@ function createDatabase(): Database {
     stock_alerts: [
       { id: 1, user_id: 2, phone: null, product_variant_id: 2, created_at: '2026-08-01T00:00:00Z' },
     ],
+    stock_movements: [],
     settings,
   };
 }
 
 // نسخه اسکیمای سید — با هر تغییر ساختاری، کلید عوض می‌شود تا دیتابیس بازسازی شود
-const DB_GLOBAL_KEY = '__GNK_DB_V2__';
+const DB_GLOBAL_KEY = '__GNK_DB_V4__';
+
+function bootstrap(): Database {
+  const template = createDatabase();
+  const loaded = loadFromSqlite(template);
+  if (loaded) return loaded;
+  // اولین اجرا: سید کامل داده‌ها روی دیتابیس واقعی ذخیره می‌شود
+  persistToSqlite(template);
+  return template;
+}
+
 const globalForDb = globalThis as unknown as Record<string, Database | undefined>;
-export const db: Database = (globalForDb[DB_GLOBAL_KEY] ??= createDatabase());
+export const db: Database = (globalForDb[DB_GLOBAL_KEY] ??= bootstrap());
+
+/** فلاش وضعیت فعلی دیتابیس روی دیسک (بعد از هر درخواست موفق API صدا زده می‌شود) */
+export function persistDb(): void {
+  persistToSqlite(db);
+}
 
 /** تولید شناسه بعدی یک جدول (معادل auto-increment) */
 export function nextId(rows: Array<{ id: number }>): number {

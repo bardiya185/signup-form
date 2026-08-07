@@ -27,6 +27,14 @@ export const users: User[] = [
     status: 'active', role: 'seller', remember_token: null,
     created_at: '2026-03-01T10:00:00Z', updated_at: '2026-03-01T10:00:00Z', deleted_at: null,
   },
+  {
+    id: 4, first_name: 'رضا', last_name: 'انبارگردان', email: 'warehouse@ginankala.ir',
+    phone: '09120000004', password: hashPassword('123456'), national_code: null,
+    avatar: null, birth_date: null, gender: 'male',
+    email_verified_at: '2026-01-05T00:00:00Z', phone_verified_at: '2026-01-05T00:00:00Z',
+    status: 'active', role: 'warehouse', remember_token: null,
+    created_at: '2026-01-05T00:00:00Z', updated_at: '2026-01-05T00:00:00Z', deleted_at: null,
+  },
 ];
 
 export const addresses: Address[] = [
@@ -49,6 +57,7 @@ export const addresses: Address[] = [
 export const wallets: Wallet[] = [
   { id: 1, user_id: 2, balance: 250000, created_at: '', updated_at: '' },
   { id: 2, user_id: 3, balance: 0, created_at: '', updated_at: '' },
+  { id: 3, user_id: 4, balance: 0, created_at: '', updated_at: '' },
 ];
 
 // ─── فروشندگان (مارکت‌پلیس) ───

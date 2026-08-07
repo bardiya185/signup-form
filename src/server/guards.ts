@@ -40,6 +40,10 @@ export const requireAdmin = (req: NextRequest | Request): D.User =>
 export const requireSellerUser = (req: NextRequest | Request): D.User =>
   requireRole(req, ['seller', 'admin', 'super_admin']);
 
+/** دسترسی انبار — انباردار و مدیران مجازند */
+export const requireWarehouse = (req: NextRequest | Request): D.User =>
+  requireRole(req, ['warehouse', 'admin', 'super_admin']);
+
 /** مالکیت منبع — معادل Policy::view/update */
 export function ownsOr403<T extends { user_id: number }>(req: NextRequest | Request, resource: T | undefined | null): T {
   const user = requireUser(req);
