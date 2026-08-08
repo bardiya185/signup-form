@@ -3,10 +3,10 @@ FROM php:8.3-fpm-alpine
 
 # افزونه‌های موردنیاز لاراول
 RUN apk add --no-cache \
-      bash curl git unzip icu-dev libzip-dev libpng-dev oniguruma-dev freetype-dev libjpeg-turbo-dev \
+      bash curl git unzip icu-dev libzip-dev libpng-dev oniguruma-dev freetype-dev libjpeg-turbo-dev sqlite-dev \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j"$(nproc)" \
-      pdo_mysql mbstring zip exif pcntl bcmath gd intl opcache
+      pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath gd intl opcache
 
 # Redis
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
@@ -27,6 +27,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# در پروداکشن: composer install --no-dev --optimize-autoloader
-# و سپس: php artisan config:cache route:cache view:cache migrate --force scout:import
+# Entrypoint: composer install + key + migrate --seed + php-fpm
+COPY docker/php/entrypoint.sh /usr/local/bin/gnk-entrypoint
+RUN chmod +x /usr/local/bin/gnk-entrypoint
+
+ENTRYPOINT ["gnk-entrypoint"]
 CMD ["php-fpm"]
