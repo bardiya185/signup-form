@@ -87,7 +87,7 @@ export interface AdminPaymentRow {
 
 export interface ActivityLogRow {
   id: number; action: string; subjectType: string | null; subjectId: number | null;
-  description: string | null; userName: string; createdAt: string;
+  description: string | null; actorName: string; createdAt: string;
 }
 
 export interface SalesReportDto {
@@ -96,21 +96,21 @@ export interface SalesReportDto {
 }
 
 export interface ProductsReportDto {
-  mostViewed: { id: number; title: string; viewCount: number; stock: number }[];
-  lowStock: { variantId: number; sku: string; title: string; stock: number }[];
-  byStatus: Record<string, number>;
+  byRevenue: { id: number; title: string; status: string; viewCount: number; stock: number; unitsSold: number; revenue: number }[];
+  topViewed: { id: number; title: string; status: string; viewCount: number; stock: number; unitsSold: number; revenue: number }[];
 }
 
 export interface UsersReportDto {
-  newByMonth: { key: string; label: string; count: number }[];
-  byRole: Record<string, number>;
+  registrations: { key: string; label: string; count: number }[];
   topBuyers: { id: number; name: string; ordersCount: number; totalSpent: number }[];
+  byRole: Record<string, number>;
 }
 
 export interface RevenueReportDto {
-  byMethod: { method: string; methodFa: string; amount: number; count: number }[];
-  byMonth: { key: string; label: string; revenue: number }[];
-  total: number;
+  byMethod: { method: string; methodFa: string; total: number; count: number }[];
+  monthly: { key: string; label: string; revenue: number }[];
+  refunded: number;
+  walletDeposits: number;
 }
 
 // ════════ فروشنده ════════
@@ -134,16 +134,20 @@ export interface SellerDashboardDto {
   }[];
 }
 
+/** ردیف محصول فروشنده = کارت محصول + وضعیت */
 export interface SellerProductRow {
-  id: number; title: string; slug: string; sku: string;
-  status: string; statusFa?: string;
-  price: number; stock: number; image: string | null;
-  viewCount?: number; createdAt: string;
+  id: number; slug: string; title: string; image: string;
+  price: number; effectivePrice: number; discountPercent: number;
+  rating: number; reviewCount: number; stock: number;
+  status: string; createdAt?: string;
 }
+
+/** اطلاعات تنوع ذخیره‌شده روی آیتم سفارش */
+export interface VariantInfoDto { sku?: string; color?: string | null; size?: string | null; guarantee?: string | null }
 
 export interface SellerOrderRow {
   id: number; orderNumber: string; orderStatus: string;
-  itemTitle: string; variantInfo: string; quantity: number;
+  itemTitle: string; variantInfo: VariantInfoDto | null; quantity: number;
   unitPrice: number; total: number; buyer: string; createdAt: string;
 }
 
@@ -153,16 +157,17 @@ export interface SettlementRow {
 }
 
 export interface SellerAnalyticsDto {
-  months: { key: string; label: string; revenue: number; units: number }[];
+  monthly: { key: string; label: string; revenue: number; units: number }[];
   topProducts: { title: string; revenue: number; units: number }[];
-  totalRevenue: number; totalUnits: number;
+  commissionRate: number;
+  netRevenue: number;
 }
 
 // ════════ انبار ════════
 export interface WarehouseVariantRow {
   variantId: number; sku: string; productId: number; productTitle: string;
   productSlug: string; image: string | null;
-  color: { id: number; name: string; hex: string } | null;
+  color: import('./domain').Color | null;
   guarantee: string | null;
   price: number; salePrice: number | null; stock: number; isActive: boolean;
   status: 'in_stock' | 'low_stock' | 'out_of_stock';
@@ -190,6 +195,6 @@ export interface StockMovementRow {
 export interface ShipmentRow {
   id: number; orderNumber: string; status: string; statusFa: string;
   buyer: string; destination: string; itemsCount: number;
-  items: { id: number; title: string; variantInfo: string; quantity: number }[];
+  items: { id: number; title: string; variantInfo: VariantInfoDto | null; quantity: number }[];
   total: number; createdAt: string; shippedAt: string | null;
 }

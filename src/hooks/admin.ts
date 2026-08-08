@@ -13,7 +13,7 @@ import type {
   SellerAnalyticsDto, SellerDashboardDto, SellerOrderRow, SellerProductRow, SettlementRow,
   ShipmentRow, StockMovementRow, UsersReportDto, WarehouseDashboardDto, WarehouseVariantRow,
 } from '@/types/admin';
-import type { OrderDto } from '@/types/account';
+import type { OrderDto, TicketDto } from '@/types/account';
 
 const onErr = (e: unknown) => toast.error(firstError(e));
 const useRole = () => useAuthStore((s) => s.user?.role);
@@ -348,9 +348,27 @@ export const useAdminTicketDetail = (id: string | number) => {
   const role = useRole();
   return useQuery({
     queryKey: ['admin', 'ticket', String(id)],
-    queryFn: () => http.get<Envelope<{ data: never } | never>>(`/admin/tickets/${id}`),
+    queryFn: () => http.get<Envelope<TicketDto>>(`/admin/tickets/${id}`),
     enabled: isAdminRole(role) && !!id,
   });
+};
+
+export const useAdminTicketMutations = (id: string | number) => {
+  const qc = useQueryClient();
+  const invalidate = () => {
+    void qc.invalidateQueries({ queryKey: ['admin', 'ticket', String(id)] });
+    void qc.invalidateQueries({ queryKey: ['admin', 'tickets'] });
+  };
+  return {
+    reply: useMutation({
+      mutationFn: (body: string) => http.post(`/admin/tickets/${id}/messages`, { body }),
+      onSuccess: () => { toast.success('پاسخ ارسال شد'); invalidate(); }, onError: onErr,
+    }),
+    close: useMutation({
+      mutationFn: () => http.put(`/admin/tickets/${id}`, {}),
+      onSuccess: () => { toast.success('تیکت بسته شد'); invalidate(); }, onError: onErr,
+    }),
+  };
 };
 
 export const useAdminSettings = () => {
@@ -365,7 +383,7 @@ export const useAdminSettings = () => {
 export const useAdminUpdateSettings = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (patch: Record<string, string>) => http.put('/admin/settings', patch),
+    mutationFn: (patch: Record<string, string>) => http.post('/admin/settings', patch),
     onSuccess: () => {
       toast.success('تنظیمات ذخیره شد');
       void qc.invalidateQueries({ queryKey: ['admin', 'settings'] });
