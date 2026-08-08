@@ -200,8 +200,12 @@ const wMove = await call('GET', '/warehouse/movements', { token: tokenW });
 check('warehouse movements', wMove.status === 200 && Array.isArray(wMove.json.data), j(wMove.json?.meta));
 const adjustTarget = wInv.json?.data?.[0];
 if (adjustTarget) {
-  const wAdj = await call('PUT', '/warehouse/inventory/' + adjustTarget.variantId, { token: tokenW, body: { stock: adjustTarget.stock, reason: 'تست دود — بدون تغییر' } });
-  check('warehouse adjust stock (no-op)', wAdj.status === 200, j(wAdj.json ?? ''));
+  const wAdj = await call('PUT', '/warehouse/inventory/' + adjustTarget.variantId, { token: tokenW, body: { stock: adjustTarget.stock + 1, reason: 'تست دود' } });
+  check('warehouse adjust stock', wAdj.status === 200, j(wAdj.json ?? ''));
+  const wAdjBack = await call('PUT', '/warehouse/inventory/' + adjustTarget.variantId, { token: tokenW, body: { stock: adjustTarget.stock, reason: 'بازگردانی تست دود' } });
+  check('warehouse adjust stock restore', wAdjBack.status === 200, j(wAdjBack.json ?? ''));
+  const wAdjSame = await call('PUT', '/warehouse/inventory/' + adjustTarget.variantId, { token: tokenW, body: { stock: adjustTarget.stock, reason: 'بدون تغییر' } });
+  check('warehouse adjust same-value 422', wAdjSame.status === 422);
 } else {
   check('warehouse adjust stock (skipped)', true);
 }
