@@ -174,6 +174,39 @@ const sellerDash = await call('GET', '/seller/dashboard', { token: tokenS });
 check('seller dashboard', sellerDash.status === 200 && sellerDash.json.data.seller.shopName === 'دنیای دیجیتال پارس', j(sellerDash.json));
 const sellerProducts = await call('GET', '/seller/products', { token: tokenS });
 check('seller products', sellerProducts.status === 200 && sellerProducts.json.data.length >= 3, String(sellerProducts.json?.meta?.total));
+const sellerOrders = await call('GET', '/seller/orders', { token: tokenS });
+check('seller orders', sellerOrders.status === 200 && Array.isArray(sellerOrders.json.data), String(sellerOrders.json?.data?.length));
+const sellerSettle = await call('GET', '/seller/settlements', { token: tokenS });
+check('seller settlements', sellerSettle.status === 200 && Array.isArray(sellerSettle.json.data));
+const sellerAnalytics = await call('GET', '/seller/analytics', { token: tokenS });
+check('seller analytics', sellerAnalytics.status === 200 && Array.isArray(sellerAnalytics.json.data?.monthly));
+
+console.log('— Warehouse —');
+const tokenW = await loginCached('warehouse', '09120000004');
+const wDash = await call('GET', '/warehouse/dashboard', { token: tokenW });
+check('warehouse dashboard', wDash.status === 200 && typeof wDash.json.data?.stats?.totalVariants === 'number', j(wDash.json?.data?.stats));
+check('warehouse dashboard sections', Array.isArray(wDash.json.data?.lowStock) && Array.isArray(wDash.json.data?.readyShipments) && Array.isArray(wDash.json.data?.recentMovements));
+const wInv = await call('GET', '/warehouse/inventory?per_page=5', { token: tokenW });
+check('warehouse inventory', wInv.status === 200 && wInv.json.data.length >= 1, j(wInv.json?.meta));
+const wInvQ = await call('GET', '/warehouse/inventory?q=گوشی', { token: tokenW });
+check('warehouse inventory search', wInvQ.status === 200 && Array.isArray(wInvQ.json.data), String(wInvQ.json?.meta?.total));
+const wInvLow = await call('GET', '/warehouse/inventory?state=low_stock', { token: tokenW });
+check('warehouse inventory low_stock filter', wInvLow.status === 200 && wInvLow.json.data.every((v) => v.status === 'low_stock'), String(wInvLow.json?.meta?.total));
+const wShip = await call('GET', '/warehouse/shipments?state=ready', { token: tokenW });
+check('warehouse shipments ready', wShip.status === 200 && Array.isArray(wShip.json.data), j(wShip.json?.meta));
+const wShipped = await call('GET', '/warehouse/shipments?state=shipped', { token: tokenW });
+check('warehouse shipments shipped', wShipped.status === 200 && Array.isArray(wShipped.json.data), j(wShipped.json?.meta));
+const wMove = await call('GET', '/warehouse/movements', { token: tokenW });
+check('warehouse movements', wMove.status === 200 && Array.isArray(wMove.json.data), j(wMove.json?.meta));
+const adjustTarget = wInv.json?.data?.[0];
+if (adjustTarget) {
+  const wAdj = await call('PUT', '/warehouse/inventory/' + adjustTarget.variantId, { token: tokenW, body: { stock: adjustTarget.stock, reason: 'تست دود — بدون تغییر' } });
+  check('warehouse adjust stock (no-op)', wAdj.status === 200, j(wAdj.json ?? ''));
+} else {
+  check('warehouse adjust stock (skipped)', true);
+}
+const wForbidden = await call('GET', '/warehouse/dashboard', { token: tokenU });
+check('warehouse forbidden for customer', wForbidden.status === 403);
 
 console.log('— Admin (Security) —');
 const forbidden = await call('GET', '/admin/dashboard', { token: tokenU });

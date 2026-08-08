@@ -10,7 +10,8 @@ import { DataTable, FilterPills, Pagination, TableToolbar, Td, Tr } from '@/comp
 import { Badge } from '@/components/ui/badge';
 import { faDigits, formatPrice, jdatetime } from '@/lib/format';
 
-const statusTone = (s: string) => (s === 'success' ? 'green' : s === 'pending' ? 'amber' : s === 'refunded' ? 'blue' : 'red') as const;
+const statusTone = (s: string): 'green' | 'amber' | 'blue' | 'red' =>
+  s === 'success' ? 'green' : s === 'pending' ? 'amber' : s === 'refunded' ? 'blue' : 'red';
 
 export default function AdminPaymentsPage() {
   const [status, setStatus] = useState<string | undefined>();

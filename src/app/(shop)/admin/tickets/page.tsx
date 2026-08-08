@@ -11,8 +11,8 @@ import { DataTable, FilterPills, Pagination, TableToolbar, Td, Tr } from '@/comp
 import { Badge } from '@/components/ui/badge';
 import { faDigits, jdate, jdatetime } from '@/lib/format';
 
-const statusTone = (s: string) => (s === 'open' ? 'amber' : s === 'answered' ? 'green' : 'zinc') as const;
-const priorityTone = (p: string) => (p === 'urgent' ? 'red' : p === 'high' ? 'amber' : 'zinc') as const;
+const statusTone = (s: string): 'amber' | 'green' | 'zinc' => (s === 'open' ? 'amber' : s === 'answered' ? 'green' : 'zinc');
+const priorityTone = (p: string): 'red' | 'amber' | 'zinc' => (p === 'urgent' ? 'red' : p === 'high' ? 'amber' : 'zinc');
 
 export default function AdminTicketsPage() {
   const [status, setStatus] = useState<string | undefined>();

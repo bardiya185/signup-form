@@ -6,7 +6,7 @@ import { useEffect, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  Bell, Heart, House, LogOut, MapPin, MessageSquareText, Package, Settings, ShieldCheck, Store, Wallet,
+  Bell, Boxes, Heart, House, LogOut, MapPin, MessageSquareText, Package, Settings, ShieldCheck, Store, Wallet,
 } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth.store';
 import { faDigits, formatPrice, jdate } from '@/lib/format';
@@ -85,9 +85,14 @@ export function ProfileShell({ children }: { children: ReactNode }) {
                 <Store size={17} /> پنل فروشندگی
               </Link>
             )}
-            {user.role === 'admin' && (
+            {(user.role === 'admin' || user.role === 'super_admin') && (
               <Link href="/admin" className={linkCls(false)}>
                 <ShieldCheck size={17} /> پنل مدیریت
+              </Link>
+            )}
+            {(user.role === 'warehouse' || user.role === 'admin' || user.role === 'super_admin') && (
+              <Link href="/warehouse" className={linkCls(false)}>
+                <Boxes size={17} /> پنل انبارداری
               </Link>
             )}
             {user.role === 'customer' && (
