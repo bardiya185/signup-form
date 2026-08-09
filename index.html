@@ -1,56 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./public/style/style.css">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#17142d" />
+  <title>گینان شاپ | ورود به حساب</title>
+  <link rel="stylesheet" href="./public/style/style.css" />
 </head>
+<body>
+  <main class="auth-shell">
+    <section class="showcase" aria-label="گینان شاپ">
+      <div class="showcase-glow glow-one"></div>
+      <div class="showcase-glow glow-two"></div>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>گینان شاپ</span>
+      </div>
+      <div class="art-wrap">
+        <img src="images/fashion-hero.png" alt="تصویرسازی مد و لباس گینان شاپ" />
+      </div>
+      <div class="showcase-copy">
+        <span class="eyebrow">به دنیای استایل خوش آمدید</span>
+        <h1>استایلِ خودت را<br><em>زندگی کن.</em></h1>
+        <p>با گینان شاپ، جدیدترین ترندها همیشه یک قدم به شما نزدیک‌ترند.</p>
+      </div>
+      <div class="pager" aria-hidden="true"><b></b><i></i><i></i></div>
+    </section>
 
-<body id="body">
-    <h1 id="Logo" style="text-align: center;position: absolute;">
-        <img id="Logo" src="images/متنAsset 1@4x.png" alt="">
-    </h1>
-    <form id="form" action="">
-        <div id="inbox">
-            <h2 style="text-align: center;color:rgb(255, 250, 230);margin-bottom: 15px;">Login Form</h2>
-            
-            <div id="startbox">
-                <div id="backbtn"></div>
-                <button type="button" id="ln" onclick="login()">Login</button>
-                <button type="button" id="sp" onclick="sginup()">Signup</button>
-            </div>
-            <br>
-            <div id="bs1" style="display: none;">
-                <input id="in3" type="text" placeholder="Username">
-                <br>
-                <input id="in4" type="number" placeholder="Tel">
-                <br>
-            </div>
-            <input id="in1" type="email" placeholder="Email Address">
-            <br>
-            <br>
-            <input id="in2" type="password" placeholder="Password">
-            <br>
-            <div id="bs2">
-                <button id="textforgot" type="button" class="btn-link"
-                style="background: transparent;border:transparent;margin-left: 20px;margin-top: 5px;color:#F29F58;font-size: 14px;">Forgot
-                password?</button>
-                <br>
-            </div>
-            <button id="btn" type="submit" class="">Login</button>
-            <br>
-            <p id="down" style="color: white;text-align:center;font-size: 13px;margin-top: 30px;">Not a member?<button
-                type="button" style="background: transparent;border:transparent;color:#F29F58;margin-left: -3px;"
-                class="btn-link">signup now</button></p>
-            </div>
+    <section class="auth-panel">
+      <div class="panel-inner">
+        <div class="mobile-brand brand">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>گینان شاپ</span>
+        </div>
+        <div class="welcome">
+          <span class="hello">خوش آمدید <span>✦</span></span>
+          <h2 id="formTitle">ورود به حساب کاربری</h2>
+          <p id="formSubtitle">برای ادامه، اطلاعات حساب خود را وارد کنید.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="انتخاب فرم">
+          <button class="tab active" type="button" data-mode="login" role="tab" aria-selected="true">ورود</button>
+          <button class="tab" type="button" data-mode="signup" role="tab" aria-selected="false">ثبت‌نام</button>
+        </div>
+
+        <form id="authForm" novalidate>
+          <div class="signup-fields" aria-hidden="true">
+            <label class="field">
+              <span>نام و نام خانوادگی</span>
+              <span class="input-wrap">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/></svg>
+                <input type="text" name="name" autocomplete="name" placeholder="مثلاً سارا محمدی" />
+              </span>
+            </label>
+          </div>
+          <label class="field">
+            <span>شماره موبایل یا ایمیل</span>
+            <span class="input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 6l8 6 8-6"/></svg>
+              <input id="identity" type="text" name="identity" autocomplete="username" placeholder="example@email.com" required />
+            </span>
+          </label>
+          <label class="field">
+            <span>رمز عبور</span>
+            <span class="input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="password" type="password" name="password" autocomplete="current-password" placeholder="رمز عبور خود را وارد کنید" minlength="6" required />
+              <button class="password-toggle" type="button" aria-label="نمایش رمز عبور">
+                <svg class="eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </span>
+          </label>
+          <div class="form-options">
+            <a href="#" id="forgotPassword">رمز عبور را فراموش کرده‌اید؟</a>
+            <label class="check"><input type="checkbox" name="remember" /><span></span> مرا به خاطر بسپار</label>
+          </div>
+          <button class="submit-btn" type="submit"><span id="submitLabel">ورود به حساب</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M14 7l5 5-5 5"/></svg></button>
+          <p class="terms signup-note">با ثبت‌نام، <a href="#">قوانین و شرایط</a> گینان شاپ را می‌پذیرید.</p>
         </form>
-        <div id="back"><img id="back1" src="images/back1Artboard 1@4x.png" alt=""></div>
-        <script src="./public/script/script.js"></script>
-    </body>
-    </html>
-    
+
+        <div class="divider"><span>یا ادامه دهید با</span></div>
+        <div class="socials">
+          <button type="button" aria-label="ورود با گوگل" class="social google">G</button>
+          <button type="button" aria-label="ورود با اپل" class="social apple">●</button>
+        </div>
+        <p class="switch-copy" id="switchCopy">حساب کاربری ندارید؟ <button type="button" data-switch>ثبت‌نام کنید</button></p>
+      </div>
+    </section>
+  </main>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="./public/script/script.js"></script>
+</body>
+</html>

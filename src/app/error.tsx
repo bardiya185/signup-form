@@ -1,0 +1,1 @@
+'use client'; export default function Error({reset}:{reset:()=>void}){return <div className="container-page py-24 text-center"><h2 className="text-xl font-bold">مشکلی پیش آمد</h2><p className="muted my-3">لطفاً دوباره تلاش کنید.</p><button onClick={reset} className="rounded-xl bg-brand px-5 py-2 text-white">تلاش مجدد</button></div>}

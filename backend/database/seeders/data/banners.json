@@ -1,0 +1,80 @@
+[
+ {
+  "id": 1,
+  "title": "جشنواره تابستانه کالای دیجیتال",
+  "image": "/products/tech-photo.jpg",
+  "link": "/category/digital",
+  "position": "hero",
+  "sort_order": 0,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "استایل تابستانی با تخفیف‌های ویژه",
+  "image": "/images/fashion-hero.png",
+  "link": "/category/fashion",
+  "position": "hero",
+  "sort_order": 1,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "خانه‌ای شیک با بهترین برندها",
+  "image": "/products/home-photo.jpg",
+  "link": "/category/home-kitchen",
+  "position": "hero",
+  "sort_order": 2,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "title": "اسپرسوی حرفه‌ای در خانه",
+  "image": "/products/real/unique/coffee.webp",
+  "link": "/product/delonghi-dedica-ec685",
+  "position": "sidebar",
+  "sort_order": 0,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 5,
+  "title": "دنیای صدای بی‌سیم",
+  "image": "/products/real/unique/headphones.webp",
+  "link": "/category/headphones",
+  "position": "sidebar",
+  "sort_order": 1,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 6,
+  "title": "سبک زندگی سالم",
+  "image": "/products/lifestyle-photo.jpg",
+  "link": "/category/beauty-health",
+  "position": "category",
+  "sort_order": 0,
+  "starts_at": null,
+  "expires_at": null,
+  "is_active": 1,
+  "created_at": "",
+  "updated_at": ""
+ }
+]

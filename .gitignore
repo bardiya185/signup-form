@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+*.log
+*.tsbuildinfo
+.env*
+!.env.example
+.smoke-tokens.json
+data/*.sqlite*
+backend/vendor
+backend/.env
+backend/.env.*
+!backend/.env.example

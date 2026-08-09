@@ -1,0 +1,72 @@
+[
+ {
+  "id": 1,
+  "user_id": 2,
+  "order_id": 1,
+  "amount": 76350000,
+  "method": "zarinpal",
+  "status": "success",
+  "transaction_id": "A100241ZP",
+  "ref_number": "481200241001",
+  "gateway_response": "{\"gateway\":\"zarinpal\",\"card_pan\":\"6037-99**-****-4521\"}",
+  "paid_at": "2026-07-21T10:00:00Z",
+  "created_at": "2026-07-21T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "user_id": 2,
+  "order_id": 2,
+  "amount": 89600000,
+  "method": "mellat",
+  "status": "success",
+  "transaction_id": "A100255ML",
+  "ref_number": "512300255002",
+  "gateway_response": "{\"gateway\":\"mellat\",\"card_pan\":\"6104-33**-****-1120\"}",
+  "paid_at": "2026-08-04T10:00:00Z",
+  "created_at": "2026-08-04T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "user_id": 2,
+  "order_id": 3,
+  "amount": 16589000,
+  "method": "zarinpal",
+  "status": "success",
+  "transaction_id": "A100261ZP",
+  "ref_number": "481200261003",
+  "gateway_response": "{\"gateway\":\"zarinpal\"}",
+  "paid_at": "2026-08-06T10:00:00Z",
+  "created_at": "2026-08-06T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 4,
+  "user_id": 3,
+  "order_id": 5,
+  "amount": 21890000,
+  "method": "mellat",
+  "status": "success",
+  "transaction_id": "A100233ML",
+  "ref_number": "512300233004",
+  "gateway_response": "{\"gateway\":\"mellat\"}",
+  "paid_at": "2026-07-18T10:00:00Z",
+  "created_at": "2026-07-18T10:00:00Z",
+  "updated_at": ""
+ },
+ {
+  "id": 5,
+  "user_id": 3,
+  "order_id": 6,
+  "amount": 5900000,
+  "method": "zarinpal",
+  "status": "failed",
+  "transaction_id": "A100247ZP",
+  "ref_number": null,
+  "gateway_response": "{\"gateway\":\"zarinpal\",\"error\":\"تراکنش توسط کاربر لغو شد\"}",
+  "paid_at": null,
+  "created_at": "2026-07-28T10:00:00Z",
+  "updated_at": ""
+ }
+]

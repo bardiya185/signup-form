@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: IRANYekan;
+  src: url('/fonts/IRANYekanXVF.woff') format('woff');
+  font-display: swap;
+}
+
+@layer base {
+  * { border-color: theme('colors.zinc.200'); }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply min-h-screen bg-zinc-50 text-zinc-800 antialiased transition-colors duration-500 dark:bg-[#090a0f] dark:text-zinc-100;
+    background-image: radial-gradient(circle at 85% -10%, rgba(239,64,86,.12), transparent 27%);
+  }
+  .dark body { background-image: radial-gradient(circle at 82% -12%, rgba(239,64,86,.16), transparent 28%), radial-gradient(circle at 10% 48%, rgba(67,56,202,.12), transparent 24%); }
+  button, input { font: inherit; }
+  ::selection { @apply bg-brand text-white; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10; }
+  .surface { @apply rounded-2xl bg-white shadow-card transition-colors duration-300 dark:border dark:border-white/[.07] dark:bg-zinc-900/80; }
+  .section-title { @apply text-lg font-bold sm:text-xl; }
+  .price { @apply font-bold text-zinc-900 dark:text-white; }
+  .muted { @apply text-sm text-zinc-500 dark:text-zinc-400; }
+  .interactive-card { @apply transition duration-300 hover:-translate-y-1 hover:shadow-xl; }
+}
+
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes soft-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,64,86,.0); } 50% { box-shadow: 0 0 0 8px rgba(239,64,86,.10); } }
+.animate-rise-in { animation: rise-in .45s cubic-bezier(.2,.8,.2,1) both; }
+.animate-soft-pulse { animation: soft-pulse 2.4s ease-in-out infinite; }
+
+/* ─── چاپ فاکتور ─── */
+@media print {
+  body { background: #fff !important; }
+  header, footer, .print\:hidden { display: none !important; }
+  main { padding: 0 !important; }
+  .container-page { max-width: 100% !important; padding: 0 !important; }
+  * { box-shadow: none !important; text-shadow: none !important; }
+}

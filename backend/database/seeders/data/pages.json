@@ -1,0 +1,35 @@
+[
+ {
+  "id": 1,
+  "title": "رویه‌های بازگرداندن کالا",
+  "slug": "return-policy",
+  "body": "شما تا ۷ روز پس از تحویل کالا می‌توانید درخواست بازگشت ثبت کنید. کالا باید در شرایط اولیه و با بسته‌بندی سلامت باشد.",
+  "status": "published",
+  "meta_title": null,
+  "meta_description": null,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 2,
+  "title": "شرایط استفاده",
+  "slug": "terms",
+  "body": "استفاده از وب‌سایت گینان‌کالا به معنای پذیرش شرایط و قوانین استفاده از خدمات است.",
+  "status": "published",
+  "meta_title": null,
+  "meta_description": null,
+  "created_at": "",
+  "updated_at": ""
+ },
+ {
+  "id": 3,
+  "title": "حریم خصوصی",
+  "slug": "privacy",
+  "body": "اطلاعات شخصی شما نزد ما محفوظ است و بدون رضایت شما با اشخاص ثالث به اشتراک گذاشته نمی‌شود.",
+  "status": "published",
+  "meta_title": null,
+  "meta_description": null,
+  "created_at": "",
+  "updated_at": ""
+ }
+]

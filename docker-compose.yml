@@ -1,0 +1,148 @@
+# ─── گینان‌کالا — استک پروداکشن (مرجع) ───
+# بک‌اند لاراول + فرانت Next.js + MySQL + Redis + Meilisearch + MinIO + Nginx + Mailhog
+# نکته: در این مخزن، API لاراول به‌صورت معادل دقیق داخل Next.js پیاده‌سازی شده است
+# (docs/architecture.md). برای اجرای محیط توسعه فعلی کافی است: npm run dev
+# این فایل توپولوژی پروداکشن را که در پرامپت درخواست شده پیاده می‌کند.
+
+services:
+  # ─── بک‌اند لاراول (PHP-FPM) ───
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: gnk-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - gnk_vendor:/var/www/html/vendor
+    environment:
+      APP_ENV: production
+      APP_URL: https://api.ginankala.local
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_DATABASE: ginankala
+      DB_USERNAME: ginankala
+      DB_PASSWORD: ${DB_PASSWORD:-secret}
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      REDIS_HOST: redis
+      SCOUT_DRIVER: meilisearch
+      MEILISEARCH_HOST: http://meilisearch:7700
+      MEILISEARCH_KEY: ${MEILI_MASTER_KEY:-masterKey}
+      FILESYSTEM_DISK: s3
+      AWS_ENDPOINT: http://minio:9000
+      AWS_BUCKET: ginankala
+      MAIL_MAILER: smtp
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      meilisearch:
+        condition: service_started
+    networks: [gnk]
+
+  # ─── فرانت‌اند Next.js ───
+  next:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    container_name: gnk-next
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      # خالی = پیش‌فرض نسبی `/api/v1` — درخواست‌ها از مرورگر به nginx می‌رسد و به لاراول پروکسی می‌شود
+      NEXT_PUBLIC_API_URL:
+    depends_on: [app]
+    networks: [gnk]
+
+  # ─── دیتابیس ───
+  mysql:
+    image: mysql:8.4
+    container_name: gnk-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ginankala
+      MYSQL_USER: ginankala
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+    volumes:
+      - gnk_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD:-rootsecret}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [gnk]
+
+  # ─── کش و صف ───
+  redis:
+    image: redis:7-alpine
+    container_name: gnk-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - gnk_redis:/data
+    networks: [gnk]
+
+  # ─── موتور جستجو ───
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    container_name: gnk-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-masterKey}
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - gnk_meili:/meili_data
+    networks: [gnk]
+
+  # ─── ذخیره‌سازی S3-سازگار ───
+  minio:
+    image: minio/minio:latest
+    container_name: gnk-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-ginankala}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-secret12345}
+    volumes:
+      - gnk_minio:/data
+    networks: [gnk]
+
+  # ─── وب‌سرور / Reverse Proxy ───
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: gnk-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./backend/public:/var/www/html/public:ro
+    depends_on: [app, next]
+    networks: [gnk]
+
+  # ─── صندوق ایمیل توسعه ───
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: gnk-mailhog
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+    networks: [gnk]
+
+networks:
+  gnk:
+    driver: bridge
+
+volumes:
+  gnk_mysql:
+  gnk_redis:
+  gnk_meili:
+  gnk_minio:
+  gnk_vendor:

@@ -1,0 +1,38 @@
+[
+ {
+  "key": "site_name",
+  "value": "گینان‌کالا"
+ },
+ {
+  "key": "site_description",
+  "value": "فروشگاه اینترنتی گینان‌کالا، تجربه‌ای مطمئن برای خرید آنلاین"
+ },
+ {
+  "key": "support_phone",
+  "value": "021-91001100"
+ },
+ {
+  "key": "support_email",
+  "value": "support@ginankala.ir"
+ },
+ {
+  "key": "free_shipping_threshold",
+  "value": "2000000"
+ },
+ {
+  "key": "default_shipping_method_id",
+  "value": "1"
+ },
+ {
+  "key": "return_period_days",
+  "value": "7"
+ },
+ {
+  "key": "incredible_offers_enabled",
+  "value": "1"
+ },
+ {
+  "key": "maintenance_mode",
+  "value": "0"
+ }
+]
