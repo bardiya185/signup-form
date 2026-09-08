@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Clock3 } from 'lucide-react';
 import { http, type Envelope } from '@/lib/http';
+import { storageGet, storageSet } from '@/lib/storage';
 import type { ProductCardDto } from '@/types/dto';
 import { ProductCard } from '@/components/product/product-card';
 
@@ -14,7 +15,7 @@ const MAX = 12;
 
 export const readRecentlyViewed = (): string[] => {
   try {
-    return JSON.parse(localStorage.getItem(KEY) || '[]') as string[];
+    return JSON.parse(storageGet(KEY) || '[]') as string[];
   } catch {
     return [];
   }
@@ -25,7 +26,7 @@ export function RecentlyViewedTracker({ slug }: { slug: string }) {
   useEffect(() => {
     const list = readRecentlyViewed().filter((s) => s !== slug);
     list.unshift(slug);
-    localStorage.setItem(KEY, JSON.stringify(list.slice(0, MAX)));
+    storageSet(KEY, JSON.stringify(list.slice(0, MAX)));
   }, [slug]);
   return null;
 }

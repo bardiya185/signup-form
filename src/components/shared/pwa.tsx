@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Download, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { storageGet, storageSet } from '@/lib/storage';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -20,7 +21,7 @@ export function PwaRegister() {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker.register('/sw.js').catch(() => undefined);
     }
-    const seenDismiss = localStorage.getItem('gnk_a2hs_dismissed');
+    const seenDismiss = storageGet('gnk_a2hs_dismissed');
     if (seenDismiss) setDismissed(true);
 
     const onPrompt = (e: Event) => {
@@ -40,7 +41,7 @@ export function PwaRegister() {
 
   const close = () => {
     setDismissed(true);
-    localStorage.setItem('gnk_a2hs_dismissed', '1');
+    storageSet('gnk_a2hs_dismissed', '1');
   };
 
   return (

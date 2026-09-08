@@ -1,5 +1,6 @@
 'use client';
 import { create } from 'zustand';
+import { storageGet, storageSet } from '@/lib/storage';
 
 export interface Toast {
   id: number;
@@ -31,8 +32,8 @@ export const useUiStore = create<UiState>((set, get) => ({
 
   setTheme: (theme) => {
     set({ theme });
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('gnk_theme', theme);
+    storageSet('gnk_theme', theme);
+    if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', theme === 'dark');
     }
   },
@@ -58,7 +59,7 @@ export const toast = {
 /** خواندن تم ذخیره‌شده هنگام بوت */
 export function initTheme(): void {
   if (typeof window === 'undefined') return;
-  const saved = window.localStorage.getItem('gnk_theme');
+  const saved = storageGet('gnk_theme');
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   const theme = saved === 'light' || saved === 'dark' ? saved : prefersDark ? 'dark' : 'light';
   useUiStore.getState().setTheme(theme);

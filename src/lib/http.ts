@@ -1,9 +1,15 @@
 /**
  * ─── HTTP Client مرورگر (سبک Axios با Interceptorها) ───
- * - تزریق خودکار Bearer Token از localStorage
+ * - تزریق خودکار Bearer Token از storage امن
  * - هدر X-Session-Id برای سبد/مقایسه مهمان
  * - نرمال‌سازی خطاها + رویداد 401 جهانی
+ *
+ * نکته: همه‌ی دسترسی‌های storage از طریق ماژول امن `storage` انجام می‌شود تا
+ * در محیط‌های iframe/sandbox که localStorage ممکن است مسدود باشد، جریان
+ * احراز هویت/API هرگز نشکند.
  */
+import { storageGet, storageRemove, storageSet } from './storage';
+
 export interface HttpError extends Error {
   status: number;
   errors?: Record<string, string[]>;
@@ -13,21 +19,18 @@ const BASE = process.env.NEXT_PUBLIC_API_URL ?? '/api/v1';
 const TOKEN_KEY = 'gnk_token';
 const SESSION_KEY = 'gnk_session';
 
-export const getToken = (): string | null =>
-  typeof window === 'undefined' ? null : window.localStorage.getItem(TOKEN_KEY);
+export const getToken = (): string | null => storageGet(TOKEN_KEY);
 
 export const setToken = (token: string | null): void => {
-  if (typeof window === 'undefined') return;
-  if (token) window.localStorage.setItem(TOKEN_KEY, token);
-  else window.localStorage.removeItem(TOKEN_KEY);
+  if (token) storageSet(TOKEN_KEY, token);
+  else storageRemove(TOKEN_KEY);
 };
 
 export const getSessionId = (): string | null => {
-  if (typeof window === 'undefined') return null;
-  let id = window.localStorage.getItem(SESSION_KEY);
+  let id = storageGet(SESSION_KEY);
   if (!id) {
     id = 's-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    window.localStorage.setItem(SESSION_KEY, id);
+    storageSet(SESSION_KEY, id);
   }
   return id;
 };
