@@ -15,12 +15,35 @@
  *
  *  مسیر فایل: data/ginankala.sqlite (قابل تغییر با GNK_SQLITE_PATH)
  */
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import type { Database } from './index';
 
 const SQLITE_GLOBAL_KEY = '__GNK_SQLITE_V1__';
+
+/**
+ * در محیط‌های سرورلس (مانند Vercel) فایل‌سیستم فقط‌خواندنی است و تلاش برای ساخت
+ * پوشه/فایل در `process.cwd()` خطا می‌دهد. این تابع یک‌بار تست می‌کند که آیا
+ * دیسک نوشتنی است یا نه و نتیجه را کش می‌کند؛ تا در موارد فقط‌خواندنی، برنامه
+ * به‌جای کرش، به حالت in-memory و بدون ماندگاری سوییچ کند.
+ */
+let diskWriteable: boolean | undefined;
+function canWriteDisk(): boolean {
+  if (diskWriteable !== undefined) return diskWriteable;
+  try {
+    const dir = path.join(process.cwd(), 'data');
+    mkdirSync(dir, { recursive: true });
+    const probe = path.join(dir, '.gnk-write-probe');
+    writeFileSync(probe, '1');
+    rmSync(probe);
+    diskWriteable = true;
+  } catch {
+    diskWriteable = false;
+    console.warn('[DB] filesystem is read-only — running without persistence (in-memory)');
+  }
+  return diskWriteable;
+}
 
 function resolveDbPath(): string {
   if (process.env.GNK_SQLITE_PATH) return process.env.GNK_SQLITE_PATH;
@@ -59,6 +82,7 @@ const collectionEntries = (db: Database) =>
  * اگر دیتابیس هنوز سید نشده باشد null برمی‌گردد.
  */
 export function loadFromSqlite(template: Database): Database | null {
+  if (!canWriteDisk()) return null;
   const conn = open();
   for (const [name] of collectionEntries(template)) ensureCollection(conn, name);
 
@@ -84,6 +108,7 @@ export function loadFromSqlite(template: Database): Database | null {
 
 /** ذخیره اتمیک کل وضعیت دیتابیس روی دیسک */
 export function persistToSqlite(db: Database): void {
+  if (!canWriteDisk()) return; // سرورلس/فقط‌خواندنی → بدون ماندگاری
   const conn = open();
   conn.exec('BEGIN');
   try {
